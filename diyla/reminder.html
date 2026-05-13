@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unilingo Reminder System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Poppins;
+    background:#0b0f2a;
+    color:white;
+}
+
+.card{
+    width:400px;
+    padding:30px;
+    background:rgba(255,255,255,0.08);
+    border-radius:20px;
+    text-align:center;
+}
+
+input,button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+}
+
+button{
+    background:linear-gradient(135deg,#7f5cff,#00c2ff);
+    color:white;
+    cursor:pointer;
+}
+
+.popup{
+    position:fixed;
+    top:20px;
+    right:-300px;
+    background:#1f1f3a;
+    padding:15px;
+    border-radius:10px;
+    transition:0.4s;
+}
+
+.popup.show{
+    right:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>🔥 Reminder System</h2>
+
+    <input type="time" id="time">
+    <input type="email" id="email" placeholder="Enter Gmail">
+
+    <button id="save">Save Reminder</button>
+    <button onclick="testEmail()">Test Email</button>
+
+    <div id="status">No reminder set</div>
+
+</div>
+
+<div class="popup" id="popup">Reminder Triggered 🔥</div>
+
+<script>
+
+/* =========================
+   EMAILJS INIT
+========================= */
+emailjs.init("YOUR_PUBLIC_KEY");
+
+/* =========================
+   NOTIFICATION PERMISSION
+========================= */
+document.addEventListener("click", function(){
+    if(Notification.permission !== "granted"){
+        Notification.requestPermission();
+    }
+});
+
+/* =========================
+   SAVE DATA
+========================= */
+$("#save").click(function(){
+
+    let time = $("#time").val();
+    let email = $("#email").val();
+
+    if(!time || !email){
+        alert("Fill all fields!");
+        return;
+    }
+
+    localStorage.setItem("time", time);
+    localStorage.setItem("email", email);
+
+    $("#status").text("Saved at " + time);
+
+});
+
+/* =========================
+   CHECK TIME
+========================= */
+let last = "";
+
+setInterval(function(){
+
+    let time = localStorage.getItem("time");
+    let email = localStorage.getItem("email");
+
+    if(!time) return;
+
+    let now = new Date();
+
+    let current =
+    String(now.getHours()).padStart(2,"0") + ":" +
+    String(now.getMinutes()).padStart(2,"0");
+
+    if(current === time && last !== current){
+
+        trigger(email);
+        last = current;
+
+    }
+
+},1000);
+
+/* =========================
+   TRIGGER FUNCTION
+========================= */
+function trigger(email){
+
+    // NOTIFICATION
+    if(Notification.permission === "granted"){
+        new Notification("🔥 Reminder",{
+            body:"Time to study!"
+        });
+    }
+
+    // POPUP
+    $("#popup").addClass("show");
+    setTimeout(()=>$("#popup").removeClass("show"),3000);
+
+    // EMAIL SEND
+    emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+        email: email,
+        message: "Time to study & keep your streak 🔥"
+    });
+
+}
+
+/* =========================
+   TEST EMAIL
+========================= */
+function testEmail(){
+
+    emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+        email: document.getElementById("email").value,
+        message: "🔥 Test email from Unilingo"
+    }).then(()=>{
+        alert("Email sent!");
+    });
+
+}
+
+</script>
+
+</body>
+</html>

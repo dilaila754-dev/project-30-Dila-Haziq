@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Quest - Duolingo Style</title>
+    <link rel="stylesheet" href="assets.css">
+
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #000;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  width: 360px;
+  background: #0b1a1f;
+  border-radius: 28px;
+  overflow: hidden;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.header {
+  background: linear-gradient(to right, #0ea5e9, #0284c7);
+  padding: 20px;
+}
+
+.month {
+  font-size: 12px;
+  font-weight: bold;
+  background: rgba(255,255,255,0.2);
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.header h1 {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.days {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.section {
+  padding: 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.title-row h2 {
+  font-size: 18px;
+}
+
+.small-text {
+  font-size: 13px;
+  color: #fbbf24;
+  font-weight: bold;
+}
+
+.progress-box {
+  background: rgba(255,255,255,0.04);
+  padding: 14px;
+  border-radius: 16px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  width: 85%;
+  height: 14px;
+  background: #334155;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 85%;
+  width: 35%;
+  background: #22c55e;
+  border-radius: 20px;
+}
+
+.quest-card {
+  background: rgba(255,255,255,0.04);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.quest-image {
+  position: relative;
+  background: linear-gradient(to bottom, #65a30d, #3f6212);
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+.quest-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.quest-content {
+  padding: 14px;
+}
+
+.quest-content h3 {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.daily-item {
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.daily-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.bottom-nav {
+  background: #081217;
+  padding: 14px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 22px;
+}
+
+.nav-btn {
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="month">JANUARY</div>
+    <h1>January Quest</h1>
+    <div class="days">22 DAYS</div>
+  </div>
+
+  <div class="section">
+    <div class="progress-box">
+      <div class="progress-label">
+        <span>Earn 30 Quest Points</span>
+        <span>10 / 30</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="title-row">
+      <h2>Weekend Quest</h2>
+      <div class="small-text">3 DAYS</div>
+    </div>
+
+    <div class="quest-card">
+      <div class="quest-image">
+  <img src="daily.jpg" alt="Daily Quest Image">
+</div>
+      <div class="quest-content">
+        <h3>Complete 3 Lessons</h3>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 20%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="title-row">
+      <h2>Daily Quests</h2>
+      <div class="small-text">8 HOURS</div>
+    </div>
+
+    <div class="daily-item" onclick="goPage('streak.html')">
+      <div class="daily-top">
+        <span>Start a streak</span>
+        <span>🏰</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: 10%;"></div>
+      </div>
+    </div>
+
+    <div class="daily-item" onclick="goPage('xp.html')">
+      <div class="daily-top">
+        <span>Earn 20 XP</span>
+        <span>⭐</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: 60%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-btn" onclick="goPage('home.html')">🏠</div>
+    <div class="nav-btn" onclick="goPage('quest.html')">📒</div>
+    <div class="nav-btn" onclick="goPage('leaderboard.html')">👥</div>
+    <div class="nav-btn" onclick="goPage('shop.html')">🛍️</div>
+    <div class="nav-btn" onclick="goPage('profile.html')">👤</div>
+  </div>
+
+</div>
+
+<script>
+function goPage(page) {
+  window.location.href = page;
+}
+</script>
+
+</body>
+</html>

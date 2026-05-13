@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unilingo - Listening Quiz</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="stylesheet" href="background.css">
+
+<link rel="stylesheet" href="listening.css">
+<link rel="stylesheet" href="assets.css">
+
+</head>
+
+<body>
+
+<div class="background-language" id="backgroundLanguage"></div>
+<div class="overlay"></div>
+
+<div class="card">
+
+    <a href="homepage.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <div class="xp-box">
+        ⭐ XP: <span id="xpValue">0</span>
+    </div>
+
+    <div class="quiz-icon">
+        <i class="fas fa-headphones"></i>
+    </div>
+
+    <h2>Listening Quiz</h2>
+
+  
+    <div class="language-name" id="langDisplay">Language: English</div>
+
+    <div class="question-no" id="questionNo">Question 1 / 8</div>
+
+    <button class="sound-btn" id="playBtn">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+    <input type="text" id="answerInput" placeholder="Type what you hear...">
+
+    <button class="submit-btn" id="checkBtn">Check Answer</button>
+
+    <div class="result" id="result"></div>
+
+</div>
+
+<script src="background.js"></script>
+
+<script src="listening.js"></script>
+
+</body>
+</html>

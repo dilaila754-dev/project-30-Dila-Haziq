@@ -1,0 +1,242 @@
+/* =========================
+   GLOBAL
+========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#050816;
+    color:white;
+}
+
+/* =========================
+   LIGHT MODE
+========================= */
+body.light{
+    background:#f4f7fb;
+    color:#111;
+}
+
+/* =========================
+   DARK MODE FORCE FIX
+========================= */
+body.dark{
+    background:#050816;
+    color:white;
+}
+
+/* =========================
+   BACKGROUND FLOAT WORDS
+========================= */
+.background-language{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+}
+
+.word{
+    position:absolute;
+    color:rgba(255,255,255,0.15);
+    font-weight:700;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    from{transform:translateY(120vh);}
+    to{transform:translateY(-120vh);}
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    z-index:-1;
+}
+
+body.light .overlay{
+    background:rgba(255,255,255,0.4);
+}
+
+/* =========================
+   PHONE CARD
+========================= */
+.phone-screen{
+    width:100%;
+    max-width:380px;
+}
+
+.card{
+    width:90%;
+    margin:auto;
+    padding:20px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+body.light .card{
+    background:white;
+    border:1px solid #ddd;
+}
+
+/* =========================
+   BACK BUTTON
+========================= */
+.back-btn{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    background:rgba(255,255,255,0.08);
+    margin-bottom:10px;
+}
+
+.back-btn:hover{
+    background:#00cefb;
+}
+
+/* =========================
+   HEADER
+========================= */
+.rank-header{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+/* =========================
+   TOP 3
+========================= */
+.top-three{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.rank-box{
+    text-align:center;
+}
+
+.rank-box img{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.rank-box.gold img{
+    width:75px;
+    height:75px;
+    border:2px solid gold;
+    box-shadow:0 0 15px gold;
+}
+
+/* =========================
+   LIST
+========================= */
+.list-container{
+    margin-top:10px;
+}
+
+.rank-item{
+    display:flex;
+    align-items:center;
+    padding:12px;
+    margin-top:10px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.06);
+    transition:0.3s;
+}
+
+.rank-item:hover{
+    transform:scale(1.02);
+    background:rgba(0,206,251,0.15);
+}
+
+body.light .rank-item{
+    background:#f1f1f1;
+}
+
+/* RANK NUMBER */
+.rank-num{
+    width:25px;
+    font-weight:bold;
+}
+
+/* AVATAR */
+.rank-item img{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    margin:0 10px;
+    object-fit:cover;
+}
+
+/* USER NAME */
+.rank-name{
+    font-weight:500;
+}
+
+/* XP */
+.rank-score{
+    margin-left:auto;
+    color:#00cefb;
+    font-weight:600;
+}
+
+/* CURRENT USER */
+.current-user{
+    border:1px solid #00cefb;
+    box-shadow:0 0 10px rgba(0,206,251,0.3);
+}
+
+/* =========================
+   NAV BAR
+========================= */
+.nav-bar{
+    position:fixed;
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    max-width:340px;
+    display:flex;
+    justify-content:space-around;
+    padding:12px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+}
+
+body.light .nav-bar{
+    background:white;
+    border:1px solid #ddd;
+}
+
+.nav-bar i{
+    color:#8b949e;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.nav-bar i:hover{
+    color:#00cefb;
+    transform:scale(1.2);
+}
+
+.nav-bar i.active{
+    color:#00cefb;
+}

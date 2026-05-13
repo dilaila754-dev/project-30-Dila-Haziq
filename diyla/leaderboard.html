@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unilingo Leaderboard</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- ✅ GLOBAL BACKGROUND -->
+<link rel="stylesheet" href="background.css">
+
+<link rel="stylesheet" href="leaderboard.css">
+<link rel="stylesheet" href="assets.css">
+
+
+</head>
+
+<body>
+
+<!-- ✅ GLOBAL BACKGROUND SYSTEM -->
+<div class="background-language" id="backgroundLanguage"></div>
+<div class="overlay"></div>
+
+<!-- CARD -->
+<div class="phone-screen">
+
+    <div class="card">
+
+        <!-- BACK BUTTON -->
+        <div class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+
+        <!-- TITLE -->
+        <div class="rank-header">
+            <h3>🏆 Bronze League</h3>
+        </div>
+
+        <!-- TOP 3 -->
+        <div class="top-three">
+
+            <div class="rank-box">
+                <img src="ain.jpeg" alt="ain">
+                <p>Ain</p>
+                <span>2nd</span>
+            </div>
+
+            <div class="rank-box gold">
+                <img src="kemae.jpeg" alt="kemae">
+                <p>Kemae</p>
+                <span>1st</span>
+            </div>
+
+            <div class="rank-box">
+                <img src="wanie.jpeg" alt="wanie">
+                <p>Wanie</p>
+                <span>3rd</span>
+            </div>
+
+        </div>
+
+        <!-- RANK LIST -->
+        <div class="list-container">
+
+            <div class="rank-item">
+                <span class="rank-num">4</span>
+                <img src="kemae.jpeg">
+                <span class="rank-name">Kemae</span>
+                <span class="rank-score">750 XP</span>
+            </div>
+
+            <div class="rank-item">
+                <span class="rank-num">5</span>
+                <img src="flower.jpg">
+                <span class="rank-name">Sarah</span>
+                <span class="rank-score">620 XP</span>
+            </div>
+
+            <!-- CURRENT USER -->
+            <div class="rank-item current-user">
+
+                <span class="rank-num" id="userRank">6</span>
+
+                <img id="leaderboardProfile"
+                src="assets/img/avatar.png">
+
+                <span id="leaderboardName">You</span>
+
+                <span class="rank-score" id="myScore">0 XP</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav-bar">
+
+    <i class="fas fa-home" onclick="goPage('homepage.html')"></i>
+
+    <i class="fas fa-trophy active"
+    onclick="goPage('leaderboard.html')"></i>
+
+    <i class="fas fa-user"
+    onclick="goPage('profile.html')"></i>
+
+    <i class="fas fa-gear"
+    onclick="goPage('setting.html')"></i>
+
+</div>
+
+<!-- ✅ GLOBAL BACKGROUND JS -->
+<script src="background.js"></script>
+
+<script src="leaderboard.js"></script>
+
+</body>
+</html>

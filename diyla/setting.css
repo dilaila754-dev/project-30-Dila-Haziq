@@ -1,0 +1,185 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:0.3s;
+}
+
+/* DARK MODE */
+body.dark{
+    background:#050816;
+    color:white;
+}
+
+/* LIGHT MODE */
+body.light{
+    background:#f5f7fb;
+    color:#111;
+}
+
+/* BACKGROUND */
+.background-language{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-2;
+}
+
+.word{
+    position:absolute;
+    font-weight:700;
+    animation:float linear infinite;
+}
+
+/* DARK WORD */
+body.dark .word{
+    color:rgba(255,255,255,0.18);
+}
+
+/* LIGHT WORD */
+body.light .word{
+    color:rgba(0,0,0,0.12);
+}
+
+@keyframes float{
+    from{transform:translateY(120vh);}
+    to{transform:translateY(-120vh);}
+}
+
+/* OVERLAY */
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+}
+
+body.dark .overlay{
+    background:rgba(0,0,0,0.6);
+}
+
+body.light .overlay{
+    background:rgba(255,255,255,0.6);
+}
+
+/* PHONE */
+.phone{
+    width:100%;
+    max-width:380px;
+}
+
+/* CARD */
+.card{
+    width:90%;
+    margin:auto;
+    padding:20px;
+    border-radius:22px;
+    backdrop-filter:blur(20px);
+}
+
+/* CARD STYLE SAME MACAM TD */
+body.dark .card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.12);
+}
+
+body.light .card{
+    background:white;
+    border:1px solid #ddd;
+}
+
+/* HEADER */
+.header{
+    text-align:center;
+    padding:12px;
+    background:#00cefb;
+    color:black;
+    border-radius:25px;
+    margin-bottom:20px;
+}
+
+/* PROFILE */
+.profile{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+    cursor:pointer;
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    overflow:hidden;
+    border:2px solid #00cefb;
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* MENU */
+.menu-item{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    cursor:pointer;
+}
+
+body.light .menu-item{
+    border-bottom:1px solid #eee;
+}
+
+.menu-item i{
+    margin-right:10px;
+    color:#00cefb;
+}
+
+/* FOOTER */
+.footer{
+    position:fixed;
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    max-width:340px;
+    display:flex;
+    justify-content:space-around;
+    padding:14px;
+    border-radius:20px;
+}
+
+body.dark .footer{
+    background:rgba(255,255,255,0.08);
+}
+
+body.light .footer{
+    background:white;
+}
+
+.footer i{
+    color:#8b949e;
+    cursor:pointer;
+}
+
+.footer i.active{
+    color:#00cefb;
+}

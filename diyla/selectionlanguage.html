@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unilingo - Choose Language</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/language.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div class="lang-wrapper">
+        <h2 class="fade-in">Which language do you want to learn?</h2>
+        
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="langInput" placeholder="Search for a language...">
+        </div>
+
+        <div class="lang-grid">
+            <div class="lang-card" onclick="selectLang('Spanish')">
+                <img src="assets/img/flags/spanish.png" alt="Spanish">
+                <p>Spanish</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('French')">
+                <img src="assets/img/flags/french.png" alt="French">
+                <p>French</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('German')">
+                <img src="assets/img/flags/german.png" alt="German">
+                <p>German</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Korean')">
+                <img src="assets/img/flags/korean.png" alt="Korean">
+                <p>Korean</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Italian')">
+                <img src="assets/img/flags/italian.png" alt="Italian">
+                <p>Italian</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Japanese')">
+                <img src="assets/img/flags/japanese.png" alt="Japanese">
+                <p>Japanese</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Mandarin')">
+                <img src="assets/img/flags/china.png" alt="Mandarin">
+                <p>Mandarin</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Arabic')">
+                <img src="assets/img/flags/arabic.png" alt="Arabic">
+                <p>Arabic</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Malay')">
+                <img src="assets/img/flags/malaysia.png" alt="Malay">
+                <p>Malay</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Russian')">
+                <img src="assets/img/flags/russian.png" alt="Russian">
+                <p>Russian</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Portuguese')">
+                <img src="assets/img/flags/portugal.png" alt="Portuguese">
+                <p>Portuguese</p>
+            </div>
+            <div class="lang-card" onclick="selectLang('Hindi')">
+                <img src="assets/img/flags/hindi.png" alt="Hindi">
+                <p>Hindi</p>
+            </div>
+        </div>
+
+        <button id="nextBtn" class="btn-lock" disabled onclick="goToHome()">Continue</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/language.js"></script> </body>
+</html>

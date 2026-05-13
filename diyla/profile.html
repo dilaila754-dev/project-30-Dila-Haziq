@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unilingo - Profile</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="stylesheet" href="profile.css">
+<link rel="stylesheet" href="background.css">
+
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="background-language" id="backgroundLanguage"></div>
+<div class="overlay"></div>
+
+<div class="video-bg">
+    <video autoplay muted loop>
+        <source src="bg.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- PHONE -->
+<div class="phone-screen">
+
+    <div class="container">
+
+        <!-- 🔥 BACK BUTTON -->
+        <button class="back-btn" onclick="goPage('homepage.html')">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+
+        <!-- PROFILE -->
+        <div class="profile">
+
+            <label for="profileUpload">
+                <img id="profileImage" src="assets/img/avatar.png">
+            </label>
+
+            <input type="file" id="profileUpload" accept="image/*">
+
+            <h2>Nor Adilah</h2>
+
+            <p id="selectedLanguage"></p>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat-box">
+                <div>🔥</div>
+                <h3 id="streakCount">0</h3>
+                <p>Day Streak</p>
+            </div>
+
+            <div class="stat-box">
+                <div>💎</div>
+                <h3 id="totalXP">0</h3>
+                <p>Total XP</p>
+            </div>
+
+            <!-- ✅ BADGE COUNT -->
+            <div class="stat-box">
+                <div>🏆</div>
+                <h3 id="badgeCount">0</h3>
+                <p>Badges</p>
+            </div>
+
+        </div>
+
+        <!-- BADGES -->
+        <div class="section-title">
+            <span>Badges</span>
+
+            <span class="view-all"
+            onclick="goPage('badge.html')">
+                View all
+            </span>
+        </div>
+
+        <div class="badges">
+
+            <div class="badge">
+                🏅<br>
+               Write
+            </div>
+
+            <div class="badge">
+                🔥<br>
+                7 Day Streak
+            </div>
+
+            <div class="badge">
+                💬<br>
+                Speaker
+            </div>
+
+        </div>
+
+        <!-- MENU -->
+        <div class="menu">
+
+            <div class="menu-item"
+            onclick="goPage('setting.html')">
+
+                <div class="menu-left">
+                    ⚙️ Account Settings
+                </div>
+
+                <div>›</div>
+
+            </div>
+
+            <div class="menu-item"
+            onclick="goPage('leaderboard.html')">
+
+                <div class="menu-left">
+                    🎯 Learning Goals
+                </div>
+
+                <div>›</div>
+
+            </div>
+
+            <div class="menu-item logout"
+            onclick="goPage('login.html')">
+
+                <div class="menu-left">
+                    🚪 Sign Out
+                </div>
+
+                <div>›</div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+
+    <i class="fas fa-home"
+    onclick="goPage('homepage.html')"></i>
+
+    <i class="fas fa-crown"
+    onclick="goPage('leaderboard.html')"></i>
+
+    <i class="fas fa-user active"
+    onclick="goPage('profile.html')"></i>
+
+    <i class="fas fa-gear"
+    onclick="goPage('setting.html')"></i>
+
+</div>
+
+<script src="background.js"></script>
+<script src="profile.js"></script>
+
+</body>
+</html>

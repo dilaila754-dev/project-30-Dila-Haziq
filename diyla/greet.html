@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Welcome - Unilingo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="greet.css">
+
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="background-language"
+id="backgroundLanguage"></div>
+
+<div class="overlay"></div>
+
+
+<!-- CARD -->
+<div class="card">
+
+    <!-- =========================
+         MAIN PROFILE IMAGE
+    ========================= -->
+
+    <div class="profile-wrapper">
+
+        <img
+            id="userImg"
+            class="avatar"
+            src="avatar.png"
+        >
+
+    </div>
+
+
+    <!-- =========================
+         UPLOAD BUTTON
+    ========================= -->
+
+    <label
+        for="imgUpload"
+        class="upload-text"
+    >
+
+        <i class="fa-solid fa-image"></i>
+        Upload Image
+
+    </label>
+
+    <input
+        type="file"
+        id="imgUpload"
+        accept="image/*"
+        hidden
+    >
+
+
+    <!-- =========================
+         AVATAR OPTIONS
+    ========================= -->
+
+    <div class="avatar-options">
+
+        <img
+            class="icon-avatar"
+            src="avatar.png"
+            data-img="avatar.png"
+        >
+
+        <img
+            class="icon-avatar"
+            src="cute.jpg"
+            data-img="cute.jpg"
+        >
+
+        <img
+            class="icon-avatar"
+            src="nyoaw.png"
+            data-img="nyoaw.png"
+        >
+
+    </div>
+
+
+    <!-- =========================
+         TEXT
+    ========================= -->
+
+    <h1 id="greet">
+
+        Welcome 👋
+
+    </h1>
+
+    <p id="userName">
+
+        User
+
+    </p>
+
+
+    <!-- BUTTON -->
+
+    <button id="startBtn">
+
+        Start Learning
+
+    </button>
+
+</div>
+
+
+<!-- JS -->
+<script src="greet.js"></script>
+
+</body>
+</html>

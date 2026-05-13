@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unilingo Listening Game</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* =========================
+   BACKGROUND (ADDED)
+========================= */
+
+body{
+    margin:0;
+    font-family:Poppins,sans-serif;
+    background:#050816;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* floating words */
+.background-language{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    overflow:hidden;
+}
+
+.word{
+    position:absolute;
+    color:rgba(255,255,255,0.25);
+    font-weight:700;
+    white-space:nowrap;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(120vh);
+    }
+    to{
+        transform:translateY(-120vh);
+    }
+}
+
+/* overlay */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    z-index:-1;
+}
+
+/* =========================
+   GAME UI (UNCHANGED)
+========================= */
+
+.game{
+    width:360px;
+    background:rgba(255,255,255,0.08);
+    border-radius:25px;
+    padding:20px;
+    text-align:center;
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+/* TOP */
+.top{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    color:#00cefb;
+}
+
+/* IMAGE */
+.img-box img{
+    width:140px;
+    height:140px;
+    object-fit:contain;
+    margin:15px 0;
+    filter:drop-shadow(0 0 10px rgba(0,206,251,0.3));
+}
+
+/* SOUND */
+button.sound{
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    border:none;
+    background:linear-gradient(135deg,#00cefb,#8a2be2);
+    font-size:28px;
+    color:white;
+    cursor:pointer;
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+/* CHECK */
+button.check{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:#00cefb;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* RESULT */
+.result{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* XP */
+.xp{
+    margin-top:8px;
+    color:#00cefb;
+}
+
+/* =========================
+   BOTTOM NAV (ADDED)
+========================= */
+
+.nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border-top:1px solid rgba(255,255,255,0.1);
+}
+
+.nav button{
+    background:none;
+    border:none;
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="background-language" id="backgroundLanguage"></div>
+<div class="overlay"></div>
+
+<!-- GAME -->
+<div class="game">
+
+    <div class="top">
+        <div id="lang">Language: English</div>
+        <div id="xp">XP: 0</div>
+    </div>
+
+    <h2>Listening Quiz</h2>
+
+    <div>Question <span id="qnum">1</span> / 8</div>
+
+    <div class="img-box">
+        <img id="img" src="img/water.png">
+    </div>
+
+    <button class="sound" onclick="playSound()">🔊</button>
+
+    <input id="answer" placeholder="Type what you hear...">
+
+    <button class="check" onclick="check()">Check</button>
+
+    <div class="result" id="result"></div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="nav">
+    <button onclick="home()">🏠 Home</button>
+    <button onclick="openProfile()">👤 Profile</button>
+    <button onclick="goBack()">⬅ Back</button>
+</div>
+
+<script>
+
+/* =========================
+   BACKGROUND WORDS (ADDED)
+========================= */
+
+const words = [
+"Hello","Bonjour","Hola","こんにちは","안녕하세요",
+"Learn","Speak","Water","Bread","Milk","Apple"
+];
+
+const bg = document.getElementById("backgroundLanguage");
+
+for(let i=0;i<50;i++){
+
+    let span = document.createElement("span");
+    span.classList.add("word");
+
+    span.innerText = words[Math.floor(Math.random()*words.length)];
+
+    span.style.left = Math.random()*100+"%";
+    span.style.fontSize = (20 + Math.random()*30)+"px";
+    span.style.animationDuration = (10 + Math.random()*15)+"s";
+    span.style.animationDelay = Math.random()*5+"s";
+    span.style.opacity = 0.2 + Math.random()*0.4;
+
+    bg.appendChild(span);
+}
+
+/* =========================
+   GAME LOGIC (UNCHANGED)
+========================= */
+
+let language = localStorage.getItem("language") || "English";
+document.getElementById("lang").innerText = "Language: " + language;
+
+const data = {
+
+English:["water","bread","milk","apple","rice","book","pen","school"],
+Spanish:["agua","pan","leche","manzana","arroz","libro","pluma","escuela"],
+French:["eau","pain","lait","pomme","riz","livre","stylo","école"],
+Japanese:["みず","パン","ぎゅうにゅう","りんご","ごはん","ほん","ペン","がっこう"],
+Korean:["물","빵","우유","사과","쌀","책","펜","학교"]
+
+};
+
+const images=[
+"water.png","bread.png","milk.png","apple.png",
+"rice.png","book.png","pen.png","school.png"
+];
+
+let list = data[language] || data["English"];
+
+let i=0;
+let xp=0;
+let correct=0;
+
+/* SOUND */
+function playSound(){
+    let speech=new SpeechSynthesisUtterance(list[i]);
+
+    speech.lang =
+    language=="Japanese"?"ja-JP":
+    language=="Korean"?"ko-KR":
+    language=="Spanish"?"es-ES":
+    language=="French"?"fr-FR":"en-US";
+
+    speech.rate=0.9;
+
+    speechSynthesis.speak(speech);
+}
+
+/* CHECK */
+function check(){
+
+    let input=document.getElementById("answer").value.toLowerCase().trim();
+    let result=document.getElementById("result");
+
+    if(input===list[i]){
+        xp+=10;
+        correct++;
+        result.innerText="Correct ✔ +10 XP";
+        result.style.color="#2ecc71";
+    }else{
+        result.innerText="Incorrect ❌ (Answer: "+list[i]+")";
+        result.style.color="#ff4d4d";
+    }
+
+    document.getElementById("xp").innerText="XP: "+xp;
+
+    setTimeout(next,1200);
+}
+
+/* NEXT */
+function next(){
+
+    i++;
+
+    if(i>=8){
+        document.querySelector(".game").innerHTML=`
+            <h2>Finished 🎉</h2>
+            <h1>${xp} XP</h1>
+            <p>${correct}/8 correct</p>
+        `;
+        return;
+    }
+
+    document.getElementById("qnum").innerText=i+1;
+    document.getElementById("img").src="img/"+images[i];
+    document.getElementById("answer").value="";
+    document.getElementById("result").innerText="";
+}
+
+/* NAV BUTTONS */
+function home(){
+    location.reload();
+}
+
+function openProfile(){
+    alert("XP: "+xp+"\nCorrect: "+correct+"/8");
+}
+
+function goBack(){
+
+    if(i>0){
+        i--;
+        document.getElementById("qnum").innerText=i+1;
+        document.getElementById("img").src="img/"+images[i];
+        document.getElementById("answer").value="";
+        document.getElementById("result").innerText="";
+    }
+}
+
+</script>
+
+</body>
+</html>

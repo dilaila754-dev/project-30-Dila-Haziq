@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unilingo - Writing</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="stylesheet" href="write.css">
+<link rel="stylesheet" href="assets.css">
+
+<link rel="stylesheet" href="background.css">
+</head>
+
+<body>
+
+<div class="background-language" id="backgroundLanguage"></div>
+<div class="overlay"></div>
+
+<div class="card">
+
+    <button class="back-btn" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <div class="lang-text" id="langText"></div>
+
+    <div class="xp-box">
+        ⭐ XP: <span id="xp">0</span>
+    </div>
+
+    <h3 style="margin-top:60px;">Writing Practice</h3>
+
+    <img id="q-img">
+    <h2 id="q-word"></h2>
+
+    <input id="answerInput" placeholder="Type answer...">
+
+    <button onclick="check()">CHECK</button>
+
+    <div id="result"></div>
+
+</div>
+
+<div class="navbar">
+    <i class="fas fa-home" onclick="go('homepage.html')"></i>
+    <i class="fas fa-trophy" onclick="go('leaderboard.html')"></i>
+    <i class="fas fa-user" onclick="go('profile.html')"></i>
+    <i class="fas fa-gear" onclick="go('setting.html')"></i>
+</div>
+
+<script src="background.js"></script>
+<script src="write.js"></script>
+
+</body>
+</html>

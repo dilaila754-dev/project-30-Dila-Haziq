@@ -1,0 +1,43 @@
+body {
+    min-height:100vh;
+    overflow-y:auto;
+    font-family:'Poppins', sans-serif;
+    margin:0;
+    padding:0;
+    background:#050816;
+    color:white;
+    transition:0.3s;
+}
+
+body.light {
+    background:#f2f2f2;
+    color:#050816;
+}
+
+.background-language{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-2;
+}
+
+.word{
+    position:absolute;
+    color:rgba(255,255,255,0.18);
+    font-weight:700;
+    white-space:nowrap;
+    text-shadow:0 0 10px rgba(0,206,251,0.35);
+    animation:floatWord linear infinite;
+}
+
+@keyframes floatWord{
+    from{transform:translateY(120vh) rotate(0deg);}
+    to{transform:translateY(-120vh) rotate(360deg);}
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background: rgba(0,0,0,0.5);
+}

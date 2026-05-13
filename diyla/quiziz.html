@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unilingo Quiz XP</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="stylesheet" href="quiziz.css">
+    <link rel="stylesheet" href="assets.css">
+
+</head>
+
+<body>
+
+<div class="background-language" id="bg"></div>
+<div class="overlay"></div>
+
+<div class="card">
+
+    <div class="top">
+        <a href="javascript:history.back()" class="back">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+
+        <div class="xp">⭐ XP: <span id="xp">0</span></div>
+    </div>
+
+    <div class="q" id="q"></div>
+    <div class="opt" id="opt"></div>
+
+</div>
+
+<div class="nav">
+    <i class="fas fa-home" onclick="go('homepage.html')"></i>
+    <i class="fas fa-trophy" onclick="go('leaderboard.html')"></i>
+    <i class="fas fa-user" onclick="go('profile.html')"></i>
+    <i class="fas fa-gear" onclick="go('setting.html')"></i>
+</div>
+
+<audio id="correctSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a5b8f0.mp3"></audio>
+<audio id="wrongSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5a0c6f0f2c.mp3"></audio>
+
+<script src="quiziz.js"></script>
+
+</body>
+</html>

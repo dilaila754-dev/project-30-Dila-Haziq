@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unilingo - Select Language</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="language.css">
+    <link rel="stylesheet" href="assets.css">
+
+
+<link rel="stylesheet" href="background.css">
+
+</head>
+
+<body>
+
+<div class="lang-container">
+
+    <div class="top-bar">
+        <a href="welcome.html" class="icon-btn"><i class="fas fa-arrow-left"></i></a>
+
+        <div style="display:flex;gap:10px;">
+            <a href="homepage.html" class="icon-btn"><i class="fas fa-house"></i></a>
+            <a href="setting.html" class="icon-btn"><i class="fas fa-gear"></i></a>
+        </div>
+    </div>
+
+    <div class="title">
+        <h2>Select Language</h2>
+        <p>Choose your language</p>
+    </div>
+
+    <div class="lang-grid">
+
+        <div class="lang-card" data-lang="English">
+            <img src="english.png"><p>English</p>
+        </div>
+
+        <div class="lang-card" data-lang="Spanish">
+            <img src="spanish.png"><p>Spanish</p>
+        </div>
+
+        <div class="lang-card" data-lang="French">
+            <img src="french.png"><p>French</p>
+        </div>
+
+        <div class="lang-card" data-lang="German">
+            <img src="german.png"><p>German</p>
+        </div>
+
+        <div class="lang-card" data-lang="Japanese">
+            <img src="japan.png"><p>Japanese</p>
+        </div>
+
+        <div class="lang-card" data-lang="Korean">
+            <img src="korea.png"><p>Korean</p>
+        </div>
+
+        <div class="lang-card" data-lang="Chinese">
+            <img src="cina.png"><p>Chinese</p>
+        </div>
+
+        <div class="lang-card" data-lang="Arabic">
+            <img src="arabic.png"><p>Arabic</p>
+        </div>
+
+        <div class="lang-card" data-lang="Malay">
+            <img src="malaysia.jpg"><p>Malay</p>
+        </div>
+
+    </div>
+
+    <div class="btn-wrap">
+        <button id="btnContinue" disabled>Continue</button>
+    </div>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="language_storage.js"></script>
+<script src="language_effects.js"></script>
+
+<script src="background.js"></script>
+
+</body>
+</html>

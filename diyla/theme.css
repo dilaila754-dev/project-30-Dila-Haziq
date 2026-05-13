@@ -1,0 +1,15 @@
+body {
+    transition: 0.3s ease;
+}
+
+/* DARK MODE */
+body.dark {
+    background: #050816;
+    color: white;
+}
+
+/* LIGHT MODE */
+body.light {
+    background: #ffffff;
+    color: #000000;
+}

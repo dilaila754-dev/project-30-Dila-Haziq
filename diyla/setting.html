@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unilingo - Settings</title>
+
+<link rel="stylesheet" href="setting.css">
+
+<!-- 🔥 GLOBAL BACKGROUND SYSTEM -->
+<link rel="stylesheet" href="background.css">
+<link rel="stylesheet" href="assets.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body class="dark">
+
+<!-- FLOATING BACKGROUND -->
+<div class="background-language" id="backgroundLanguage"></div>
+
+<!-- OVERLAY -->
+<div class="overlay"></div>
+
+<div class="phone">
+
+<div class="card">
+
+    <div class="header">SETTINGS</div>
+
+    <!-- PROFILE -->
+    <div class="profile" onclick="go('profile.html')">
+
+        <div class="left">
+
+            <div class="avatar">
+                <img src="https://i.imgur.com/8Km9tLL.jpg" alt="Profile">
+            </div>
+
+            <div>
+                <h2 id="username">Guest</h2>
+                <p>Language Learner</p>
+            </div>
+
+        </div>
+
+        <div>></div>
+
+    </div>
+
+    <!-- MENU -->
+    <div class="menu-item" onclick="go('homepage.html')">
+        <span><i class="fas fa-book"></i> Learning</span>
+        <span>></span>
+    </div>
+
+    <div class="menu-item" onclick="go('language.html')">
+        <span><i class="fas fa-language"></i> Language</span>
+        <span>></span>
+    </div>
+
+    <div class="menu-item" onclick="toggleDarkMode()">
+        <span><i class="fas fa-moon"></i> Dark Mode</span>
+        <span id="darkStatus">DARK/LIGHT</span>
+    </div>
+
+    <div class="menu-item" onclick="logout()">
+        <span><i class="fas fa-right-from-bracket"></i> Logout</span>
+        <span>></span>
+    </div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <i class="fas fa-home"
+    onclick="go('homepage.html')"></i>
+
+    <i class="fas fa-book"
+    onclick="go('leaderboard.html')"></i>
+
+    <i class="fas fa-user"
+    onclick="go('profile.html')"></i>
+
+    <i class="fas fa-gear active"
+    onclick="go('setting.html')"></i>
+</div>
+
+<!-- JS -->
+<script src="background.js"></script>
+<script src="setting.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unilingo - Badges</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Poppins,sans-serif;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#050816;
+    color:white;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at 20% 20%, #00cefb33, transparent 40%),
+    radial-gradient(circle at 80% 80%, #8a2be233, transparent 40%),
+    radial-gradient(circle at 50% 50%, #ff00ff22, transparent 50%);
+    animation:bgMove 8s infinite alternate ease-in-out;
+    z-index:-2;
+}
+
+@keyframes bgMove{
+    0%{transform:scale(1);}
+    100%{transform:scale(1.2) rotate(3deg);}
+}
+
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.word{
+    position:absolute;
+    font-weight:700;
+    color:rgba(255,255,255,0.05);
+    animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+    from{transform:translateY(120vh);}
+    to{transform:translateY(-120vh);}
+}
+
+.container{
+    width:90%;
+    max-width:420px;
+    padding:20px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 0 40px rgba(0,206,251,0.15);
+    text-align:center;
+}
+
+h1{
+    margin-bottom:15px;
+}
+
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+
+button{
+    padding:8px 12px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#00cefb;
+    color:black;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.badge-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.badge{
+    padding:15px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    cursor:pointer;
+    transition:0.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.badge span{
+    font-size:32px;
+    display:block;
+    margin-bottom:5px;
+}
+
+.badge.locked{
+    opacity:0.25;
+    filter:grayscale(1);
+}
+
+.badge.unlocked{
+    background:linear-gradient(135deg,#00cefb33,#8a2be233);
+    border:1px solid rgba(0,206,251,0.5);
+    box-shadow:
+        0 0 12px rgba(0,206,251,0.4),
+        0 0 25px rgba(138,43,226,0.25),
+        inset 0 0 10px rgba(255,255,255,0.08);
+    transform:translateY(-4px);
+}
+
+.badge.unlocked:hover{
+    transform:translateY(-8px) scale(1.03);
+    box-shadow:
+        0 0 18px rgba(0,206,251,0.6),
+        0 0 35px rgba(138,43,226,0.35);
+}
+
+.badge.animate{
+    animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(0.5);}
+    100%{transform:scale(1);}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg" id="bgWords"></div>
+
+<div class="container">
+
+    <div class="top-bar">
+        <button onclick="history.back()">⬅ Back</button>
+        <button onclick="clearBadges()">Reset</button>
+    </div>
+
+    <h1>🏆 Your Badges</h1>
+
+    <div class="badge-grid" id="badgeGrid"></div>
+
+</div>
+
+<script>
+
+/* =========================
+   FLOATING WORDS
+========================= */
+
+const words = [
+    "Learn","Speak","Quiz",
+    "XP","Level","Win",
+    "Fun","Grow"
+];
+
+const bg = document.getElementById("bgWords");
+
+for(let i=0;i<30;i++){
+
+    const span = document.createElement("div");
+
+    span.className = "word";
+
+    span.innerText =
+    words[Math.floor(Math.random()*words.length)];
+
+    span.style.left =
+    Math.random()*100 + "%";
+
+    span.style.fontSize =
+    (12 + Math.random()*20) + "px";
+
+    span.style.animationDuration =
+    (10 + Math.random()*15) + "s";
+
+    span.style.animationDelay =
+    Math.random()*5 + "s";
+
+    bg.appendChild(span);
+}
+
+/* =========================
+   GET BADGES
+========================= */
+
+function getBadges(){
+
+    return JSON.parse(
+        localStorage.getItem("badges")
+    ) || [];
+}
+
+/* =========================
+   RENDER BADGES
+========================= */
+
+function renderBadges(){
+
+    const grid =
+    document.getElementById("badgeGrid");
+
+    const userBadges =
+    getBadges();
+
+    const allBadges = [
+
+        {
+            id:"listening_master",
+            icon:"🎧",
+            name:"Listening Master"
+        },
+
+        {
+            id:"speaking_master",
+            icon:"🗣",
+            name:"Speaking Master"
+        },
+
+        {
+            id:"writing_master",
+            icon:"✍",
+            name:"Writing Master"
+        },
+
+        {
+            id:"quiz_master",
+            icon:"🧠",
+            name:"Quiz Master"
+        },
+
+        {
+            id:"streak_7",
+            icon:"🔥",
+            name:"7 Day Streak"
+        },
+
+        {
+            id:"streak_30",
+            icon:"🏆",
+            name:"30 Day Streak"
+        }
+
+    ];
+
+    grid.innerHTML = "";
+
+    allBadges.forEach(b => {
+
+        let div =
+        document.createElement("div");
+
+        div.className = "badge";
+
+        if(userBadges.includes(b.id)){
+
+            div.classList.add(
+                "unlocked",
+                "animate"
+            );
+
+        }else{
+
+            div.classList.add("locked");
+        }
+
+        div.innerHTML = `
+            <span>${b.icon}</span>
+            <b>${b.name}</b>
+        `;
+
+        grid.appendChild(div);
+    });
+}
+
+/* =========================
+   RESET BADGES
+========================= */
+
+function clearBadges(){
+
+    localStorage.removeItem("badges");
+
+    renderBadges();
+
+    // realtime sync
+    window.dispatchEvent(
+        new StorageEvent("storage",{
+            key:"badges"
+        })
+    );
+}
+
+/* =========================
+   REALTIME BADGE SYNC
+========================= */
+
+window.addEventListener("storage",(e)=>{
+
+    if(e.key === "badges"){
+
+        renderBadges();
+    }
+
+});
+
+/* =========================
+   FIRST LOAD
+========================= */
+
+renderBadges();
+
+</script>
+
+</body>
+</html>

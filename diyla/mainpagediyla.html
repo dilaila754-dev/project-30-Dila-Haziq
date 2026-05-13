@@ -1,0 +1,401 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+.w{font-family:'Press Start 2P',monospace;position:relative;width:100%;min-height:620px;overflow:hidden;border-radius:12px;border:3px solid #2d1060;background:#08041a;}
+.sky{position:absolute;inset:0;background:linear-gradient(180deg,#05020f 0%,#0d0628 20%,#1a0a3e 38%,#2d0e60 50%,#4a1060 62%,#7a2040 74%,#c03520 84%,#e05510 91%,#f07820 96%,#e06510 100%);}
+.stars{position:absolute;inset:0;pointer-events:none;z-index:1;}
+.star{position:absolute;background:#fff;image-rendering:pixelated;}
+.moon{position:absolute;top:22px;right:55px;z-index:3;width:68px;height:68px;background:#f5e272;border-radius:50%;box-shadow:0 0 0 4px #d4b830,0 0 40px #f5e27255;}
+.moon-c{position:absolute;background:#c8a018;border-radius:50%;}
+.floaters{position:absolute;inset:0;pointer-events:none;z-index:4;}
+.floater{position:absolute;animation:float linear infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}25%{transform:translateY(-12px);}75%{transform:translateY(-6px);}}
+.ground{position:absolute;bottom:0;left:0;right:0;height:108px;z-index:5;background:linear-gradient(180deg,#163808 0%,#0c2205 100%);border-top:3px solid #25600e;}
+.grass{position:absolute;top:0;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,#25600e 0,#25600e 8px,#163808 8px,#163808 16px);}
+.music-btn{position:absolute;top:28px;left:16px;z-index:20;background:#0d0628cc;border:2px solid #7c3aed;padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;clip-path:polygon(6px 0,calc(100% - 6px) 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);transition:border-color .15s;min-width:130px;}
+.music-btn:hover{border-color:#fbbf24;}
+.music-icon{font-size:14px;flex-shrink:0;}
+.music-info{display:flex;flex-direction:column;gap:2px;}
+.music-title{font-size:5px;color:#fbbf24;letter-spacing:1px;white-space:nowrap;overflow:hidden;max-width:90px;}
+.music-status{font-size:5px;color:#64748b;letter-spacing:1px;}
+.music-status.playing{color:#22c55e;animation:blink 1s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.viz{position:absolute;top:28px;left:160px;z-index:20;display:none;align-items:flex-end;gap:2px;height:34px;}
+.viz.show{display:flex;}
+.vbar{width:4px;background:#7c3aed;border-radius:1px;}
+.tracklist{position:absolute;top:68px;left:16px;z-index:20;background:#0d0628ee;border:2px solid #2d1060;padding:8px;min-width:160px;display:none;clip-path:polygon(6px 0,calc(100% - 6px) 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);}
+.tracklist.show{display:block;}
+.tl-label{font-size:5px;color:#06b6d4;letter-spacing:1px;margin-bottom:6px;display:block;}
+.tl-item{font-size:6px;color:#94a3b8;letter-spacing:.5px;padding:5px 6px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:color .1s,background .1s;}
+.tl-item:hover{color:#fbbf24;background:#1a0a3e;}
+.tl-item.active{color:#22c55e;}
+.tl-dot{width:6px;height:6px;border-radius:50%;background:#2d1060;flex-shrink:0;}
+.tl-item.active .tl-dot{background:#22c55e;animation:dotpulse 1s ease-in-out infinite;}
+@keyframes dotpulse{0%,100%{transform:scale(1);}50%{transform:scale(1.5);}}
+.ns{position:absolute;inset:0;z-index:25;background:#05020fdd;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:1rem;transition:opacity .5s;}
+.ns.out{opacity:0;pointer-events:none;}
+.ns-crystal{font-size:48px;margin-bottom:1rem;animation:crystalSpin 4s ease-in-out infinite;filter:drop-shadow(0 0 12px #7c3aed88);}
+@keyframes crystalSpin{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-10px) scale(1.08);}}
+.ns-title{font-size:clamp(10px,3.5vw,20px);color:#fbbf24;letter-spacing:3px;text-shadow:3px 3px 0 #92400e,0 0 20px #fbbf2466;margin-bottom:.4rem;text-align:center;animation:tpulse 2.5s ease-in-out infinite;}
+@keyframes tpulse{0%,100%{text-shadow:3px 3px 0 #92400e,0 0 12px #fbbf2444;}50%{text-shadow:3px 3px 0 #92400e,0 0 28px #fbbf24aa;}}
+.ns-sub{font-size:7px;color:#06b6d4;letter-spacing:2px;margin-bottom:1.8rem;text-align:center;animation:blink 1s step-end infinite;}
+.nbox{background:#0d0628;border:3px solid #7c3aed;padding:1.4rem 1.6rem;width:min(380px,92%);clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px);}
+.nlabel{font-size:7px;color:#06b6d4;letter-spacing:1px;display:block;margin-bottom:10px;}
+.ni{font-family:'Press Start 2P',monospace;font-size:11px;background:#05020f;border:2px solid #7c3aed;color:#e2e8f0;padding:9px 10px;width:100%;outline:none;letter-spacing:2px;margin-bottom:14px;caret-color:#fbbf24;}
+.ni:focus{border-color:#fbbf24;}
+.nbtn{font-family:'Press Start 2P',monospace;font-size:9px;background:#7c3aed;color:#fff;border:none;padding:11px;width:100%;cursor:pointer;letter-spacing:1px;clip-path:polygon(6px 0,calc(100% - 6px) 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);transition:background .1s,transform .1s;}
+.nbtn:hover{background:#6d28d9;transform:translateY(-2px);}
+.gs{position:absolute;inset:0;z-index:15;display:none;flex-direction:column;align-items:center;justify-content:center;padding:1.2rem 1rem 4rem;gap:0;}
+.gs.show{display:flex;}
+.gs-hi{font-size:8px;color:#22c55e;letter-spacing:2px;margin-bottom:.4rem;text-align:center;}
+.gs-name{font-size:clamp(16px,5vw,32px);color:#fbbf24;text-shadow:3px 3px 0 #92400e;margin-bottom:.3rem;animation:tpulse 2s ease-in-out infinite;text-align:center;word-break:break-all;}
+.gs-q{font-size:7px;color:#e2e8f0;letter-spacing:1px;margin-bottom:1.6rem;text-align:center;line-height:2;}
+.portals{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.pcard{background:#0d0628cc;border:3px solid #7c3aed;padding:1.2rem 1rem 1rem;width:150px;text-align:center;cursor:pointer;clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px);transition:border-color .15s,transform .15s;position:relative;}
+.pcard:hover{transform:translateY(-8px);}
+.pcard.p1{border-color:#7c3aed;}.pcard.p1:hover{border-color:#a855f7;box-shadow:0 8px 40px #7c3aed55;}
+.pcard.p2{border-color:#f97316;}.pcard.p2:hover{border-color:#fbbf24;box-shadow:0 8px 40px #f9731655;}
+.pcard-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:5px;padding:3px 8px;clip-path:polygon(4px 0,calc(100% - 4px) 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);white-space:nowrap;}
+.pcard.p1 .pcard-badge{background:#7c3aed;color:#e9d5ff;}
+.pcard.p2 .pcard-badge{background:#f97316;color:#ffedd5;}
+.porb{width:70px;height:70px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative;}
+.porb.o1{background:radial-gradient(circle at 35% 35%,#a855f7,#4c1d95);box-shadow:0 0 0 3px #7c3aed,0 0 24px #7c3aed88;animation:orb1 2s ease-in-out infinite;}
+.porb.o2{background:radial-gradient(circle at 35% 35%,#fb923c,#7c2d12);box-shadow:0 0 0 3px #f97316,0 0 24px #f9731688;animation:orb2 2s ease-in-out infinite;animation-delay:.6s;}
+@keyframes orb1{0%,100%{box-shadow:0 0 0 3px #7c3aed,0 0 20px #7c3aed66;}50%{box-shadow:0 0 0 4px #a855f7,0 0 40px #a855f7aa;}}
+@keyframes orb2{0%,100%{box-shadow:0 0 0 3px #f97316,0 0 20px #f9731666;}50%{box-shadow:0 0 0 4px #fbbf24,0 0 40px #fbbf24aa;}}
+.porb-ring{position:absolute;inset:-6px;border-radius:50%;border:2px dashed;opacity:.4;animation:spin 4s linear infinite;}
+.o1 .porb-ring{border-color:#a855f7;}.o2 .porb-ring{border-color:#f97316;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.pname{font-size:8px;color:#fbbf24;letter-spacing:1px;margin-bottom:5px;}
+.pdesc{font-size:6px;color:#94a3b8;line-height:1.9;letter-spacing:.5px;}
+
+/* ── NAV ── */
+.nav{position:absolute;bottom:0;left:0;right:0;height:54px;background:#05020fee;border-top:3px solid #2d1060;display:none;align-items:center;justify-content:center;z-index:18;}
+.nav.show{display:flex;}
+.ni2{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 14px;cursor:pointer;border-right:1px solid #1a0a3e;transition:background .15s,transform .1s;min-width:60px;position:relative;}
+.ni2:last-child{border-right:none;}
+.ni2:hover{background:#1a0a3e;transform:translateY(-2px);}
+.ni2:active{transform:scale(.93);}
+.ni2.a{background:#1a0a3e;}
+.ni2.a .ni2-l{color:#fbbf24;}
+.ni2-i{font-size:13px;}
+.ni2-l{font-size:5px;color:#64748b;letter-spacing:.5px;transition:color .1s;}
+.ni2:hover .ni2-l{color:#e2e8f0;}
+
+.ptag{position:absolute;top:28px;right:16px;z-index:20;background:#05020fcc;border:2px solid #2d1060;padding:5px 10px;display:none;}
+.ptag.show{display:block;}
+.ptag-n{font-size:7px;color:#fbbf24;letter-spacing:1px;}
+.ptag-l{font-size:5px;color:#22c55e;margin-top:3px;}
+.ticker{position:absolute;top:0;left:0;right:0;height:22px;background:#05020fee;border-bottom:2px solid #2d1060;display:flex;align-items:center;overflow:hidden;z-index:19;}
+.ticker-i{font-size:6px;color:#06b6d4;letter-spacing:1px;white-space:nowrap;display:inline-block;padding-left:100%;animation:tick 22s linear infinite;}
+@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+.wsign{position:absolute;right:20px;bottom:185px;z-index:10;background:#3d1e00;border:3px solid #6a3a00;padding:10px 14px;text-align:center;display:none;clip-path:polygon(0 0,100% 0,100% 83%,56% 83%,50% 100%,44% 83%,0 83%);min-width:110px;}
+.wsign.show{display:block;}
+.ws1{font-size:6px;color:#fbbf24;line-height:2;letter-spacing:1px;}
+.ws2{font-size:9px;color:#f97316;text-shadow:1px 1px 0 #7c2d00;margin-top:4px;}
+.portal-flash{position:absolute;inset:0;z-index:30;pointer-events:none;opacity:0;transition:opacity .3s;}
+.portal-flash.show{opacity:1;}
+
+/* NAV FLASH EFFECT */
+.nav-flash{position:absolute;inset:0;z-index:29;pointer-events:none;opacity:0;transition:opacity .2s;}
+.nav-flash.show{opacity:1;}
+</style>
+
+<div class="w" id="w">
+  <div class="sky"></div>
+  <div class="stars" id="stars"></div>
+  <div class="ticker"><span class="ticker-i">✦ SELAMAT DATANG KE PIXEL WORLD ✦ &nbsp;&nbsp;&nbsp; DUA PORTAL MENANTI ✦ &nbsp;&nbsp;&nbsp; PILIH LIFE KAU HARI NI ✦ &nbsp;&nbsp;&nbsp; MUSIC: CHIPTUNE VIBES ✦</span></div>
+  <div class="moon"><div class="moon-c" style="width:12px;height:12px;top:12px;left:16px;opacity:.35;"></div></div>
+  <div class="music-btn" id="musicBtn" onclick="toggleMusic()">
+    <span class="music-icon" id="musicIcon">🎵</span>
+    <div class="music-info">
+      <span class="music-title" id="musicTitle">PIXEL THEME</span>
+      <span class="music-status" id="musicStatus">▶ PLAY</span>
+    </div>
+  </div>
+  <div class="viz" id="viz">
+    <div class="vbar" id="vb1" style="height:8px;"></div>
+    <div class="vbar" id="vb2" style="height:14px;background:#a855f7;"></div>
+    <div class="vbar" id="vb3" style="height:20px;"></div>
+    <div class="vbar" id="vb4" style="height:12px;background:#f97316;"></div>
+    <div class="vbar" id="vb5" style="height:18px;"></div>
+    <div class="vbar" id="vb6" style="height:8px;background:#06b6d4;"></div>
+    <div class="vbar" id="vb7" style="height:22px;"></div>
+    <div class="vbar" id="vb8" style="height:10px;background:#22c55e;"></div>
+  </div>
+  <div class="tracklist" id="tracklist">
+    <span class="tl-label">🎼 PLAYLIST</span>
+    <div class="tl-item active" id="tl0" onclick="selectTrack(0)"><div class="tl-dot"></div>PIXEL THEME</div>
+    <div class="tl-item" id="tl1" onclick="selectTrack(1)"><div class="tl-dot"></div>DUNGEON BEAT</div>
+    <div class="tl-item" id="tl2" onclick="selectTrack(2)"><div class="tl-dot"></div>NIGHT QUEST</div>
+    <div class="tl-item" id="tl3" onclick="selectTrack(3)"><div class="tl-dot"></div>BOSS BATTLE</div>
+  </div>
+  <svg style="position:absolute;top:22px;left:0;width:100%;height:170px;z-index:2;pointer-events:none;" viewBox="0 0 680 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="55" y="58" width="90" height="20" rx="3" fill="#4a1060" opacity=".65"/>
+    <rect x="45" y="50" width="44" height="24" rx="3" fill="#4a1060" opacity=".65"/>
+    <rect x="123" y="50" width="38" height="22" rx="3" fill="#4a1060" opacity=".65"/>
+    <rect x="290" y="38" width="110" height="22" rx="3" fill="#5a0e70" opacity=".55"/>
+    <rect x="278" y="30" width="52" height="26" rx="3" fill="#5a0e70" opacity=".55"/>
+    <rect x="380" y="30" width="46" height="24" rx="3" fill="#5a0e70" opacity=".55"/>
+    <rect x="495" y="52" width="78" height="18" rx="3" fill="#380850" opacity=".5"/>
+    <rect x="483" y="44" width="38" height="22" rx="3" fill="#380850" opacity=".5"/>
+  </svg>
+  <div class="floaters" id="floaters"></div>
+  <svg style="position:absolute;bottom:103px;left:0;width:100%;height:290px;z-index:3;pointer-events:none;" viewBox="0 0 680 290" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="0,290 75,75 155,290" fill="#1c0c3c"/>
+    <polygon points="55,290 175,44 295,290" fill="#28104e"/>
+    <polygon points="195,290 315,85 435,290" fill="#1c0c3c"/>
+    <polygon points="375,290 475,65 575,290" fill="#28104e"/>
+    <polygon points="515,290 615,95 715,290" fill="#1c0c3c"/>
+    <polygon points="75,75 85,108 65,108" fill="#ddd0ee" opacity=".35"/>
+    <polygon points="175,44 188,80 162,80" fill="#ddd0ee" opacity=".35"/>
+    <polygon points="315,85 328,116 302,116" fill="#ddd0ee" opacity=".35"/>
+    <polygon points="475,65 488,98 462,98" fill="#ddd0ee" opacity=".35"/>
+    <ellipse cx="100" cy="290" rx="210" ry="105" fill="#0e2406"/>
+    <ellipse cx="340" cy="290" rx="230" ry="95" fill="#122c08"/>
+    <ellipse cx="580" cy="290" rx="210" ry="105" fill="#0e2406"/>
+  </svg>
+  <div style="position:absolute;bottom:172px;left:47%;width:20px;height:105px;z-index:5;background:linear-gradient(180deg,#70d8f0cc,#38a8e0aa,#1878c088);clip-path:polygon(18% 0,82% 0,100% 100%,0 100%);animation:wfx .35s steps(2) infinite;"></div>
+  <style>@keyframes wfx{0%{opacity:1;}50%{opacity:.65;}}</style>
+  <div style="position:absolute;bottom:112px;left:25px;width:270px;height:78px;background:linear-gradient(180deg,#14336acc,#0a1c50aa);border-radius:50% 50% 30% 30%/30% 30% 20% 20%;z-index:4;overflow:hidden;">
+    <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);width:70px;height:44px;background:radial-gradient(ellipse,#e05020aa 0%,transparent 70%);"></div>
+  </div>
+  <svg style="position:absolute;bottom:110px;left:22%;width:115px;height:48px;z-index:7;" viewBox="0 0 115 48" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="24" width="115" height="14" fill="#523018" rx="2"/>
+    <path d="M8,38 Q57,8 107,38" stroke="#6a4028" stroke-width="4" fill="none"/>
+    <rect x="0" y="21" width="115" height="6" fill="#624028"/>
+  </svg>
+  <svg style="position:absolute;bottom:98px;left:0;width:100%;height:190px;z-index:6;pointer-events:none;" viewBox="0 0 680 190" xmlns="http://www.w3.org/2000/svg">
+    <rect x="52" y="50" width="10" height="80" fill="#3a1e0e"/><polygon points="57,14 26,84 88,84" fill="#185210"/><polygon points="57,36 28,94 86,94" fill="#1e6214"/><polygon points="57,56 32,104 82,104" fill="#185210"/>
+    <rect x="438" y="54" width="9" height="68" fill="#3a1e0e"/><polygon points="442,20 416,76 468,76" fill="#185210"/><polygon points="442,42 418,82 466,82" fill="#1e6214"/>
+    <rect x="492" y="58" width="8" height="62" fill="#3a1e0e"/><polygon points="496,26 472,74 520,74" fill="#185210"/><polygon points="496,46 475,82 517,82" fill="#1e6214"/>
+  </svg>
+  <svg style="position:absolute;bottom:98px;left:0;width:130px;height:270px;z-index:9;" viewBox="0 0 130 270" xmlns="http://www.w3.org/2000/svg">
+    <rect x="54" y="100" width="18" height="170" fill="#3a1e0e"/>
+    <polygon points="63,16 16,122 110,122" fill="#185210"/>
+    <polygon points="63,46 20,132 106,132" fill="#1e6214"/>
+    <polygon points="63,76 26,148 100,148" fill="#185210"/>
+    <rect x="28" y="102" width="30" height="6" fill="#3a1e0e"/>
+    <rect x="18" y="108" width="5" height="62" fill="#3a1e0e"/>
+    <rect x="10" y="84" width="22" height="28" fill="#7a5408" stroke="#5a3800" stroke-width="2"/>
+    <rect x="14" y="88" width="14" height="20" fill="#ffcc44" opacity=".85"/>
+    <ellipse cx="21" cy="98" rx="20" ry="18" fill="#ffaa22" opacity=".18"/>
+  </svg>
+  <svg style="position:absolute;bottom:98px;right:28px;width:158px;height:185px;z-index:8;" viewBox="0 0 158 185" xmlns="http://www.w3.org/2000/svg">
+    <rect x="98" y="18" width="18" height="42" fill="#524028"/><rect x="96" y="16" width="22" height="6" fill="#705840"/>
+    <polygon points="8,68 79,8 150,68" fill="#481870"/>
+    <polygon points="8,68 79,14 150,68" fill="#581e80"/>
+    <rect x="8" y="66" width="142" height="106" fill="#604838"/>
+    <rect x="58" y="110" width="42" height="62" fill="#3a1e0e" rx="2"/>
+    <rect x="16" y="78" width="34" height="28" fill="#ffcc44" rx="2"/>
+    <rect x="108" y="78" width="34" height="28" fill="#ffcc44" rx="2"/>
+    <line x1="33" y1="78" x2="33" y2="106" stroke="#604838" stroke-width="2"/>
+    <line x1="16" y1="92" x2="50" y2="92" stroke="#604838" stroke-width="2"/>
+    <line x1="125" y1="78" x2="125" y2="106" stroke="#604838" stroke-width="2"/>
+    <line x1="108" y1="92" x2="142" y2="92" stroke="#604838" stroke-width="2"/>
+    <ellipse cx="33" cy="92" rx="20" ry="14" fill="#ffaa22" opacity=".2"/>
+    <ellipse cx="125" cy="92" rx="20" ry="14" fill="#ffaa22" opacity=".2"/>
+    <rect x="12" y="158" width="14" height="10" fill="#7a3008" rx="1"/><circle cx="19" cy="155" r="5" fill="#e83858"/>
+    <rect x="132" y="158" width="14" height="10" fill="#7a3008" rx="1"/><circle cx="139" cy="155" r="5" fill="#b848d8"/>
+  </svg>
+  <div class="ground"><div class="grass"></div><div id="flowers" style="position:absolute;top:4px;left:0;right:0;height:18px;"></div></div>
+  <svg style="position:absolute;bottom:102px;left:0;width:100%;height:28px;z-index:8;pointer-events:none;" viewBox="0 0 680 28" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="9" width="680" height="5" fill="#524018"/><rect x="0" y="17" width="680" height="4" fill="#422810"/>
+    <rect x="38" y="0" width="8" height="28" fill="#524018"/><rect x="38" y="0" width="8" height="9" fill="#705830"/>
+    <rect x="138" y="0" width="8" height="28" fill="#524018"/><rect x="138" y="0" width="8" height="9" fill="#705830"/>
+    <rect x="298" y="0" width="8" height="28" fill="#524018"/><rect x="298" y="0" width="8" height="9" fill="#705830"/>
+    <rect x="448" y="0" width="8" height="28" fill="#524018"/><rect x="448" y="0" width="8" height="9" fill="#705830"/>
+    <rect x="638" y="0" width="8" height="28" fill="#524018"/><rect x="638" y="0" width="8" height="9" fill="#705830"/>
+  </svg>
+  <div class="wsign" id="wsign"><div class="ws1">WELCOME<br>— TO —<br>PIXEL</div><div class="ws2">WORLD</div></div>
+  <div class="ptag" id="ptag"><div class="ptag-n" id="ptname">—</div><div class="ptag-l">▶ LVL 1 HERO</div></div>
+
+  <!-- ── NAV BAR ── tukar href ikut nama file kau -->
+  <div class="nav" id="nav">
+    <div class="ni2 a" onclick="navGo('index.html', this)">
+      <span class="ni2-i">🏠</span><span class="ni2-l">HOME</span>
+    </div>
+    <div class="ni2" onclick="navGo('about.html', this)">
+      <span class="ni2-i">👤</span><span class="ni2-l">ABOUT</span>
+    </div>
+   
+  </div>
+
+  <div class="ns" id="ns">
+    <div class="ns-crystal">🔮</div>
+    <div class="ns-title">✦ PIXEL WORLD ✦</div>
+    <div class="ns-sub">▶ MASUKKAN NAMA UNTUK MULA ◀</div>
+    <div class="nbox">
+      <span class="nlabel">NAMA HERO KAMU:</span>
+      <input class="ni" id="ni" type="text" maxlength="12" placeholder="CONTOH: DILA" autocomplete="off"/>
+      <button class="nbtn" id="gobtn">▶ MASUK DUNIA</button>
+    </div>
+  </div>
+  <div class="gs" id="gs">
+    <div class="gs-hi">SELAMAT DATANG,</div>
+    <div class="gs-name" id="gsname">HERO</div>
+    <div class="gs-q">NAK MASUK LIFE MANA HARI NI? 👇</div>
+    <div class="portals">
+      <div class="pcard p1" id="pc1" onclick="choosePortal('haziq')">
+        <div class="pcard-badge">HAZIQ</div>
+        <div class="porb o1"><div class="porb-ring"></div>🔮</div>
+        <div class="pname">LIFE HAZIQ</div>
+        <div class="pdesc">WORLD OF<br>MYSTERY<br>— CLICK —</div>
+      </div>
+      <div class="pcard p2" id="pc2" onclick="choosePortal('dila')">
+        <div class="pcard-badge" style="background:#f97316;color:#ffedd5;">DILA</div>
+        <div class="porb o2"><div class="porb-ring"></div>🌟</div>
+        <div class="pname">LIFE DILA</div>
+        <div class="pdesc" id="pdesc2">WORLD OF<br>ADVENTURE<br>— CLICK —</div>
+      </div>
+    </div>
+  </div>
+  <div class="portal-flash" id="pFlash"></div>
+  <div class="nav-flash" id="nFlash"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+<script>
+(function(){
+  const sv=document.getElementById('stars');
+  for(let i=0;i<90;i++){
+    const el=document.createElement('div');el.className='star';
+    const sz=Math.random()<.15?3:Math.random()<.4?2:1;
+    el.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*68}%;left:${Math.random()*100}%;opacity:${.35+Math.random()*.65};animation:blink ${1+Math.random()*4}s step-end infinite;animation-delay:${Math.random()*6}s;`;
+    sv.appendChild(el);
+  }
+  const fl=document.getElementById('flowers');
+  ['🌸','🌼','🌺','🌷'].forEach((f)=>{
+    for(let j=0;j<3;j++){
+      const s=document.createElement('span');
+      s.textContent=f;s.style.cssText=`position:absolute;left:${5+Math.random()*90}%;font-size:${8+Math.random()*5}px;`;
+      fl.appendChild(s);
+    }
+  });
+  const fw=document.getElementById('floaters');
+  [['⭐','18%','8%','3.2s',18],['💎','25%','18%','4.1s',16],['🌙','12%','38%','3.8s',20],['✨','30%','55%','2.9s',14],['🔮','20%','70%','4.4s',16],['⚡','35%','80%','3.5s',14],['💫','15%','90%','5s',18],['🌟','40%','4%','3.3s',14],['🪄','28%','44%','4.8s',15],['🎮','42%','62%','3.6s',16]]
+  .forEach(([e,t,l,d,sz],i)=>{
+    const el=document.createElement('div');el.className='floater';
+    el.style.cssText=`top:${t};left:${l};font-size:${sz}px;animation-duration:${d};animation-delay:${(i*.4)%3}s;opacity:.7;`;
+    el.textContent=e;fw.appendChild(el);
+  });
+
+  let audioReady=false,isPlaying=false,currentTrack=0,vizInterval=null;
+  const tracks=[
+    {name:'PIXEL THEME',melody:[['C4','E4','G4','C5'],['A3','C4','E4','A4'],['F3','A3','C4','F4'],['G3','B3','D4','G4']],bass:['C2','A1','F1','G1'],tempo:160},
+    {name:'DUNGEON BEAT',melody:[['D4','F4','A4','D5'],['Bb3','D4','F4','Bb4'],['G3','Bb3','D4','G4'],['A3','C4','E4','A4']],bass:['D2','Bb1','G1','A1'],tempo:140},
+    {name:'NIGHT QUEST',melody:[['E4','G4','B4','E5'],['C4','E4','G4','C5'],['A3','C4','E4','A4'],['B3','D4','F4','B4']],bass:['E2','C2','A1','B1'],tempo:120},
+    {name:'BOSS BATTLE',melody:[['C4','Eb4','G4','C5'],['Ab3','C4','Eb4','Ab4'],['Bb3','D4','F4','Bb4'],['C4','E4','G4','C5']],bass:['C2','Ab1','Bb1','C2'],tempo:200}
+  ];
+  let synth,bassSynth,drumSynth,seq,bassSeq,drumSeq;
+  function setupAudio(){
+    if(audioReady)return;
+    try{
+      synth=new Tone.PolySynth(Tone.Synth,{oscillator:{type:'square'},envelope:{attack:.01,decay:.1,sustain:.3,release:.1},volume:-10}).toDestination();
+      bassSynth=new Tone.Synth({oscillator:{type:'triangle'},envelope:{attack:.02,decay:.2,sustain:.4,release:.2},volume:-14}).toDestination();
+      drumSynth=new Tone.MembraneSynth({pitchDecay:.05,octaves:4,volume:-18}).toDestination();
+      audioReady=true;
+    }catch(e){}
+  }
+  function buildSequence(trackIdx){
+    const t=tracks[trackIdx];
+    Tone.Transport.bpm.value=t.tempo;
+    if(seq){seq.stop();seq.dispose();}
+    if(bassSeq){bassSeq.stop();bassSeq.dispose();}
+    if(drumSeq){drumSeq.stop();drumSeq.dispose();}
+    seq=new Tone.Sequence((time,note)=>{synth.triggerAttackRelease(note,'8n',time);},t.melody[0].concat(t.melody[1]),'8n');
+    bassSeq=new Tone.Sequence((time,note)=>{bassSynth.triggerAttackRelease(note,'4n',time);},t.bass,'2n');
+    drumSeq=new Tone.Sequence((time,beat)=>{if(beat==='k')drumSynth.triggerAttackRelease('C1','8n',time);},[`k`,null,'k',null,'k',null,'k',null],'8n');
+    seq.start(0);bassSeq.start(0);drumSeq.start(0);
+  }
+  async function toggleMusic(){
+    setupAudio();
+    if(!audioReady)return;
+    document.getElementById('tracklist').classList.toggle('show');
+    if(!isPlaying){
+      await Tone.start();
+      buildSequence(currentTrack);
+      Tone.Transport.start();
+      isPlaying=true;
+      document.getElementById('musicIcon').textContent='🔊';
+      document.getElementById('musicStatus').textContent='♪ PLAYING';
+      document.getElementById('musicStatus').classList.add('playing');
+      document.getElementById('viz').classList.add('show');
+      startViz();
+    }else{
+      Tone.Transport.stop();isPlaying=false;
+      document.getElementById('musicIcon').textContent='🎵';
+      document.getElementById('musicStatus').textContent='▶ PLAY';
+      document.getElementById('musicStatus').classList.remove('playing');
+      document.getElementById('viz').classList.remove('show');
+      stopViz();
+    }
+  }
+  function startViz(){
+    const bars=['vb1','vb2','vb3','vb4','vb5','vb6','vb7','vb8'];
+    const cols=['#7c3aed','#a855f7','#f97316','#fbbf24','#06b6d4','#22c55e','#e2e8f0','#f97316'];
+    vizInterval=setInterval(()=>{
+      bars.forEach((id,i)=>{const h=6+Math.random()*26;const b=document.getElementById(id);if(b){b.style.height=h+'px';b.style.background=cols[i];}});
+    },120);
+  }
+  function stopViz(){clearInterval(vizInterval);}
+  window.selectTrack=function(idx){
+    currentTrack=idx;
+    document.querySelectorAll('.tl-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
+    document.getElementById('musicTitle').textContent=tracks[idx].name;
+    if(isPlaying){Tone.Transport.stop();buildSequence(idx);Tone.Transport.start();}
+  };
+  window.toggleMusic=toggleMusic;
+
+  const ni=document.getElementById('ni');
+  document.getElementById('gobtn').addEventListener('click',startWorld);
+  ni.addEventListener('keydown',e=>{if(e.key==='Enter')startWorld();});
+  function startWorld(){
+    const name=(ni.value.trim().toUpperCase()||'HERO');
+    document.getElementById('gsname').textContent=name;
+    document.getElementById('ptname').textContent=name;
+    document.getElementById('pdesc2').innerHTML=`${name}'S<br>WORLD<br>— CLICK —`;
+    const ns=document.getElementById('ns');
+    ns.classList.add('out');
+    setTimeout(()=>{
+      ns.style.display='none';
+      document.getElementById('ptag').classList.add('show');
+      document.getElementById('wsign').classList.add('show');
+      document.getElementById('nav').classList.add('show');
+      document.getElementById('gs').classList.add('show');
+    },500);
+  }
+
+  // ── NAV FUNCTION ──
+  // Tukar nama file ikut struktur folder kau
+  window.navGo = function(url, btn) {
+    // Highlight button yang diklik
+    document.querySelectorAll('.ni2').forEach(b => b.classList.remove('a'));
+    btn.classList.add('a');
+
+    // Flash putih kejap pastu navigate
+    const nf = document.getElementById('nFlash');
+    nf.style.background = '#ffffff';
+    nf.style.transition = 'opacity 0.15s';
+    nf.classList.add('show');
+    setTimeout(() => { window.location.href = url; }, 300);
+  };
+
+  // ── PORTAL NAVIGATION ──
+  const PORTAL_URLS = {
+    haziq: 'haziq/index.html',
+    dila:  'indexdiyla.html'
+  };
+  window.choosePortal = function(who) {
+    const color = who === 'haziq' ? '#7c3aed' : '#f97316';
+    const flash = document.getElementById('pFlash');
+    flash.style.background = color;
+    flash.style.transition = 'opacity 0.25s';
+    flash.classList.add('show');
+    document.getElementById('pc1').style.pointerEvents = 'none';
+    document.getElementById('pc2').style.pointerEvents = 'none';
+    setTimeout(() => { window.location.href = PORTAL_URLS[who]; }, 500);
+  };
+})();
+</script>

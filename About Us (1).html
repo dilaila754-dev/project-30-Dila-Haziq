@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      min-height:100vh;
+      background:#050505;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+      color:white;
+    }
+
+    /* Background Glow */
+    body::before{
+      content:"";
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:#00f7ff;
+      filter:blur(180px);
+      opacity:0.2;
+      top:-100px;
+      left:-100px;
+    }
+
+    body::after{
+      content:"";
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:#ff00ff;
+      filter:blur(180px);
+      opacity:0.2;
+      bottom:-100px;
+      right:-100px;
+    }
+
+    .container{
+      position:relative;
+      z-index:2;
+      text-align:center;
+      width:100%;
+      padding:40px 20px;
+    }
+
+    .title{
+      font-size:3rem;
+      color:#00f7ff;
+      text-shadow:
+        0 0 10px #00f7ff,
+        0 0 20px #00f7ff,
+        0 0 40px #00f7ff;
+      margin-bottom:15px;
+    }
+
+    .subtitle{
+      color:#ccc;
+      margin-bottom:50px;
+      font-size:1rem;
+    }
+
+    .card-wrapper{
+      display:flex;
+      justify-content:center;
+      gap:40px;
+      flex-wrap:wrap;
+    }
+
+    .flip-card{
+      width:300px;
+      height:450px;
+      perspective:1000px;
+    }
+
+    .flip-card-inner{
+      position:relative;
+      width:100%;
+      height:100%;
+      transition:transform 0.8s;
+      transform-style:preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner{
+      transform:rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back{
+      position:absolute;
+      width:100%;
+      height:100%;
+      border-radius:20px;
+      backface-visibility:hidden;
+      overflow:hidden;
+      border:2px solid #00f7ff;
+      box-shadow:
+        0 0 15px #00f7ff,
+        0 0 30px rgba(255,0,255,0.5);
+      background:rgba(15,15,15,0.95);
+    }
+
+    /* FRONT */
+    .flip-card-front{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    .profile-img{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      border:3px solid #00f7ff;
+      margin-bottom:20px;
+      object-fit:cover;
+      box-shadow:0 0 20px #00f7ff;
+    }
+
+    .name{
+      font-size:1.7rem;
+      color:#00f7ff;
+      margin-bottom:10px;
+      text-shadow:0 0 10px #00f7ff;
+    }
+
+    .role{
+      color:#ff00ff;
+      font-size:1rem;
+      text-shadow:0 0 10px #ff00ff;
+      margin-bottom:20px;
+    }
+
+    .contact-box{
+      width:100%;
+      margin-top:10px;
+      padding:15px;
+      border-radius:15px;
+      background:rgba(0,247,255,0.08);
+      border:1px solid rgba(0,247,255,0.4);
+      box-shadow:0 0 15px rgba(0,247,255,0.2);
+    }
+
+    .contact-title{
+      color:#00f7ff;
+      margin-bottom:10px;
+      font-size:1rem;
+      text-shadow:0 0 10px #00f7ff;
+    }
+
+    .contact-info{
+      font-size:0.9rem;
+      color:#ddd;
+      margin:6px 0;
+    }
+
+    /* BACK */
+    .flip-card-back{
+      transform:rotateY(180deg);
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+    }
+
+    .intro-title{
+      font-size:1.8rem;
+      color:#ff00ff;
+      margin-bottom:20px;
+      text-shadow:0 0 10px #ff00ff;
+    }
+
+    .intro-text{
+      color:#ddd;
+      line-height:1.7;
+      font-size:0.95rem;
+    }
+
+    .social-btn{
+      margin-top:25px;
+      padding:10px 20px;
+      border:none;
+      border-radius:30px;
+      background:transparent;
+      border:2px solid #00f7ff;
+      color:#00f7ff;
+      cursor:pointer;
+      transition:0.3s;
+      box-shadow:0 0 10px #00f7ff;
+    }
+
+    .social-btn:hover{
+      background:#00f7ff;
+      color:black;
+      box-shadow:
+        0 0 20px #00f7ff,
+        0 0 40px #00f7ff;
+    }
+
+    @media(max-width:768px){
+      .card-wrapper{
+        flex-direction:column;
+        align-items:center;
+      }
+
+      .title{
+        font-size:2.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1 class="title">Meet Our Team</h1>
+
+    <p class="subtitle">
+      Hover the neon cards to discover our introductions
+    </p>
+
+    <div class="card-wrapper">
+
+      <!-- CARD 1 -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+
+          <div class="flip-card-front">
+
+           <img
+              src="haziq.jpg"
+              class="profile-img"
+              alt="Person 1"
+            >
+
+            <h2 class="name">Mohd Haziq Afiq</h2>
+           
+            <!-- CONTACT US -->
+            <div class="contact-box">
+              <h3 class="contact-title">Contact Us</h3>
+
+              <p class="contact-info">
+                📱 011-2190-6304
+              </p>
+            </div>
+
+          </div>
+
+          <div class="flip-card-back">
+
+            <h2 class="intro-title">Hello 👋</h2>
+
+            <p class="intro-text">
+              I’m Mohd Haziq Afiq, I’ve created this About Us page for my app project to introduce the development team and provide users with clear information about the people behind the application.
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+
+          <!-- FRONT -->
+          <div class="flip-card-front">
+
+            <img
+              src="adila.jpg"
+              class="profile-img"
+              alt="Person 2"
+            >
+
+            <h2 class="name">Nor Adilah</h2>
+
+            <!-- CONTACT US -->
+            <div class="contact-box">
+              <h3 class="contact-title">Contact Us</h3>
+
+              <p class="contact-info">
+                📱 019-434-6085
+              </p>
+            </div>
+
+          </div>
+
+          <!-- BACK -->
+          <div class="flip-card-back">
+
+            <h2 class="intro-title">
+              Nice to Meet You ✨
+            </h2>
+
+            <p class="intro-text">
+              I'm Nor Adilah. I am the web developer responsible for creating the main page of this application, focusing on building a clean, responsive, and user-friendly interface that ensures smooth navigation and an engaging first impression for users.
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+@media(max-width:700px){
+
+  .sidebar{
+    width:260px;
+  }
+
+  .auth-box{
+    width:90%;
+  }
+
+}

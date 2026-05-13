@@ -1,0 +1,126 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  overflow:hidden;
+  transition:0.3s ease-in-out;
+}
+
+body.dark{
+  background: radial-gradient(circle at top, #0a0a0a, #000);
+  color:#e0e0e0;
+}
+
+/* LIGHT MODE (still neon accented) */
+body.light{
+  background:#f5f5f5;
+  color:#111;
+}
+
+button,
+input,
+select{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:12px;
+  outline:none;
+  transition:0.25s ease;
+  font-size:14px;
+}
+
+button{
+  cursor:pointer;
+  letter-spacing:0.5px;
+  position:relative;
+  overflow:hidden;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 12px currentColor, 0 0 25px currentColor;
+}
+
+.btn-login{
+  background:#00ff88;
+  color:#001a10;
+  box-shadow:0 0 10px #00ff88;
+}
+.btn-login:hover{
+  background:#00ff99;
+  box-shadow:0 0 18px #00ff88, 0 0 40px #00ff88;
+}
+
+.btn-logout{
+  background:#ff2e63;
+  color:#1a0006;
+  box-shadow:0 0 10px #ff2e63;
+}
+.btn-logout:hover{
+  background:#ff4d79;
+  box-shadow:0 0 18px #ff2e63, 0 0 40px #ff2e63;
+}
+
+.btn-toggle{
+  background:#9d4edd;
+  color:#120018;
+  box-shadow:0 0 10px #9d4edd;
+}
+.btn-toggle:hover{
+  background:#b86bff;
+  box-shadow:0 0 18px #9d4edd, 0 0 40px #9d4edd;
+}
+
+.btn-action{
+  background:#00bbff;
+  color:#00131a;
+  box-shadow:0 0 10px #00bbff;
+}
+.btn-action:hover{
+  background:#33ccff;
+  box-shadow:0 0 18px #00bbff, 0 0 40px #00bbff;
+}
+
+.btn-secondary{
+  background:#00fff0;
+  color:#001414;
+  box-shadow:0 0 10px #00fff0;
+}
+.btn-secondary:hover{
+  background:#66fff7;
+  box-shadow:0 0 18px #00fff0, 0 0 40px #00fff0;
+}
+
+input, select{
+  background:#111;
+  color:#00ffcc;
+  border:1px solid #222;
+}
+
+body.light input,
+body.light select{
+  background:#fff;
+  color:#111;
+  border:1px solid #ccc;
+}
+
+input:focus,
+select:focus{
+  border:1px solid #00ffcc;
+  box-shadow:0 0 10px #00ffcc;
+}
+
+.sidebar h2{
+  margin: 10px 0 5px;
+  font-size: 16px;
+}
+
+.sidebar hr{
+  margin: 10px 0;
+  border: 1px solid #222;
+}

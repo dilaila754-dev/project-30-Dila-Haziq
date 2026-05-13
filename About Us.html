@@ -1,326 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Us</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Pixel World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{width:100%;min-height:100%;background:#000;}
+    .scene{position:fixed;inset:0;z-index:0;overflow:hidden;}
+    .sky{position:absolute;inset:0;background:linear-gradient(180deg,#02010a 0%,#080420 18%,#120838 35%,#1e0a50 50%,#380d70 65%,#6a1a50 78%,#a82e28 88%,#d94c10 94%,#f07010 100%);}
+    .stars-layer{position:absolute;inset:0;pointer-events:none;}
+    .star{position:absolute;background:#fff;border-radius:50%;}
+    @keyframes twinkle{0%,100%{opacity:.15;}50%{opacity:1;}}
+    .moon{position:absolute;top:40px;right:80px;width:80px;height:80px;background:radial-gradient(circle at 35% 35%,#fff8c0,#f0d840);border-radius:50%;box-shadow:0 0 0 4px #c8a820,0 0 60px #f0d84066,0 0 120px #f0d84022;}
+    .aurora-band{position:absolute;border-radius:50%;filter:blur(45px);animation:auroraFloat ease-in-out infinite alternate;}
+    @keyframes auroraFloat{0%{transform:translateY(0) scaleX(1);}100%{transform:translateY(28px) scaleX(1.08);}}
+    .mtn-layer{position:absolute;bottom:108px;left:0;right:0;}
+    .ground{position:absolute;bottom:0;left:0;right:0;height:108px;background:linear-gradient(180deg,#163808,#0c2205);border-top:3px solid #25600e;}
+    .grass{position:absolute;top:0;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,#25600e 0,#25600e 8px,#163808 8px,#163808 16px);}
+    .firefly{position:absolute;width:3px;height:3px;background:#ffe066;border-radius:50%;box-shadow:0 0 6px #ffe066,0 0 12px #ffe06644;animation:ffMove ease-in-out infinite alternate;}
+    @keyframes ffMove{0%{transform:translate(0,0);opacity:.15;}50%{opacity:1;}100%{transform:translate(var(--fx),var(--fy));opacity:.2;}}
+    .particle{position:absolute;border-radius:50%;animation:pRise linear infinite;}
+    @keyframes pRise{0%{transform:translateY(0) translateX(0);opacity:0;}10%{opacity:.9;}85%{opacity:.3;}100%{transform:translateY(-90vh) translateX(var(--px));opacity:0;}}
 
-    body{
-      font-family: Arial, sans-serif;
-      min-height:100vh;
-      background:#050505;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      overflow:hidden;
-      color:white;
-    }
+    /* TICKER */
+    .ticker{position:fixed;top:0;left:0;right:0;height:22px;background:#05020fee;border-bottom:2px solid #2d1060;display:flex;align-items:center;overflow:hidden;z-index:50;}
+    .ticker-i{font-family:'Press Start 2P',monospace;font-size:6px;color:#06b6d4;letter-spacing:1px;white-space:nowrap;display:inline-block;padding-left:100%;animation:tick 30s linear infinite;}
+    @keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
 
-    /* Background Glow */
-    body::before{
-      content:"";
-      position:absolute;
-      width:500px;
-      height:500px;
-      background:#00f7ff;
-      filter:blur(180px);
-      opacity:0.2;
-      top:-100px;
-      left:-100px;
-    }
+    /* NAV */
+    .nav{position:fixed;bottom:0;left:0;right:0;height:54px;background:#05020fee;border-top:3px solid #2d1060;display:flex;align-items:center;justify-content:center;z-index:50;}
+    .ni2{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 14px;cursor:pointer;border-right:1px solid #1a0a3e;transition:background .15s,transform .1s;min-width:60px;font-family:'Press Start 2P',monospace;}
+    .ni2:last-child{border-right:none;}
+    .ni2:hover{background:#1a0a3e;transform:translateY(-2px);}
+    .ni2.a{background:#1a0a3e;}
+    .ni2.a .ni2-l{color:#fbbf24;}
+    .ni2-i{font-size:13px;}
+    .ni2-l{font-size:5px;color:#64748b;letter-spacing:.5px;}
+    .ni2:hover .ni2-l{color:#e2e8f0;}
+    .nav-flash{position:fixed;inset:0;z-index:49;pointer-events:none;opacity:0;transition:opacity .2s;}
+    .nav-flash.show{opacity:1;}
 
-    body::after{
-      content:"";
-      position:absolute;
-      width:500px;
-      height:500px;
-      background:#ff00ff;
-      filter:blur(180px);
-      opacity:0.2;
-      bottom:-100px;
-      right:-100px;
-    }
+    /* PAGE */
+    .page{position:relative;z-index:10;padding:44px 20px 80px;min-height:100vh;display:flex;flex-direction:column;align-items:center;}
 
-    .container{
-      position:relative;
-      z-index:2;
-      text-align:center;
-      width:100%;
-      padding:40px 20px;
-    }
+    /* HERO */
+    .hero{text-align:center;margin-top:36px;margin-bottom:40px;}
+    .hero-badge{font-family:'Press Start 2P',monospace;font-size:7px;color:#f472b6;letter-spacing:2px;background:#f472b618;border:1px solid #f472b644;padding:5px 14px;margin-bottom:16px;display:inline-block;animation:bpulse 2.5s ease-in-out infinite;}
+    @keyframes bpulse{0%,100%{box-shadow:0 0 0 0 #f472b633;}50%{box-shadow:0 0 0 8px #f472b600;}}
+    .hero-title{font-family:'Press Start 2P',monospace;font-size:clamp(16px,4.5vw,34px);color:#fbbf24;text-shadow:4px 4px 0 #92400e,0 0 40px #fbbf2455;line-height:1.5;margin-bottom:10px;animation:tglow 3s ease-in-out infinite;}
+    @keyframes tglow{0%,100%{text-shadow:4px 4px 0 #92400e,0 0 18px #fbbf2433;}50%{text-shadow:4px 4px 0 #92400e,0 0 50px #fbbf24aa;}}
+    .hero-sub{font-family:'Press Start 2P',monospace;font-size:8px;color:#f9a8d4;letter-spacing:2px;margin-bottom:20px;}
+    .hero-desc{font-family:'Press Start 2P',monospace;font-size:7px;color:#cbd5e1;line-height:2.3;max-width:540px;margin:0 auto;}
 
-    .title{
-      font-size:3rem;
-      color:#00f7ff;
-      text-shadow:
-        0 0 10px #00f7ff,
-        0 0 20px #00f7ff,
-        0 0 40px #00f7ff;
-      margin-bottom:15px;
-    }
+    /* DIVIDER */
+    .pdiv{display:flex;align-items:center;gap:8px;margin:28px 0;width:100%;max-width:720px;}
+    .pdiv-line{flex:1;height:2px;background:repeating-linear-gradient(90deg,#f97316 0,#f97316 8px,transparent 8px,transparent 16px);}
+    .pdiv-ico{font-size:18px;animation:spin 5s linear infinite;}
+    @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 
-    .subtitle{
-      color:#ccc;
-      margin-bottom:50px;
-      font-size:1rem;
-    }
+    /* STATS */
+    .stats-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:36px;}
+    .stat{background:#0d0628cc;border:2px solid #2d1060;padding:16px 22px;text-align:center;clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px);min-width:100px;transition:transform .2s,border-color .2s;}
+    .stat:hover{transform:scale(1.07);border-color:#f97316;}
+    .stat-val{font-family:'Press Start 2P',monospace;font-size:20px;color:#fbbf24;text-shadow:2px 2px 0 #92400e;display:block;margin-bottom:6px;}
+    .stat-lbl{font-family:'Press Start 2P',monospace;font-size:5px;color:#64748b;letter-spacing:1px;}
 
-    .card-wrapper{
-      display:flex;
-      justify-content:center;
-      gap:40px;
-      flex-wrap:wrap;
-    }
+    /* SECTION TITLE */
+    .sec-title{font-family:'Press Start 2P',monospace;font-size:10px;color:#fbbf24;text-shadow:3px 3px 0 #92400e;margin-bottom:28px;text-align:center;letter-spacing:2px;}
 
-    .flip-card{
-      width:300px;
-      height:450px;
-      perspective:1000px;
-    }
+    /* TEAM ROW */
+    .team-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-bottom:40px;width:100%;max-width:800px;}
 
-    .flip-card-inner{
-      position:relative;
-      width:100%;
-      height:100%;
-      transition:transform 0.8s;
-      transform-style:preserve-3d;
-    }
+    /* DILA — MAIN BIG CARD */
+    .tcard{background:#0d0628cc;border:2px solid #2d1060;padding:28px 22px 22px;clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);transition:transform .2s,border-color .2s,box-shadow .2s;position:relative;backdrop-filter:blur(4px);}
+    .tcard.dila{width:340px;}
+    .tcard.dila:hover{transform:translateY(-8px);border-color:#f97316;box-shadow:0 14px 50px #f9731655;}
+    .tcard.haziq{width:260px;}
+    .tcard.haziq:hover{transform:translateY(-6px);border-color:#a855f7;box-shadow:0 10px 36px #a855f744;}
 
-    .flip-card:hover .flip-card-inner{
-      transform:rotateY(180deg);
-    }
+    /* CROWN BADGE */
+    .crown-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-family:'Press Start 2P',monospace;font-size:6px;background:linear-gradient(90deg,#f97316,#fbbf24);color:#fff;padding:4px 12px;clip-path:polygon(5px 0,calc(100% - 5px) 0,100% 5px,100% calc(100% - 5px),calc(100% - 5px) 100%,5px 100%,0 calc(100% - 5px),0 5px);white-space:nowrap;letter-spacing:1px;}
 
-    .flip-card-front,
-    .flip-card-back{
-      position:absolute;
-      width:100%;
-      height:100%;
-      border-radius:20px;
-      backface-visibility:hidden;
-      overflow:hidden;
-      border:2px solid #00f7ff;
-      box-shadow:
-        0 0 15px #00f7ff,
-        0 0 30px rgba(255,0,255,0.5);
-      background:rgba(15,15,15,0.95);
-    }
+    /* PROFILE PIC */
+    .pimg-wrap{position:relative;margin:0 auto 16px;cursor:pointer;}
+    .tcard.dila .pimg-wrap{width:110px;height:110px;}
+    .tcard.haziq .pimg-wrap{width:80px;height:80px;}
+    .pimg-wrap input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:5;width:100%;height:100%;}
+    .pimg{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;}
+    .tcard.dila .pimg{border:3px solid #f97316;box-shadow:0 0 0 3px #1a0a3e,0 0 28px #f9731688;}
+    .tcard.haziq .pimg{border:3px solid #7c3aed;box-shadow:0 0 0 3px #1a0a3e,0 0 20px #7c3aed66;}
+    .pimg-ring{position:absolute;inset:-8px;border-radius:50%;border:2px dashed;opacity:.35;animation:spin 6s linear infinite;pointer-events:none;}
+    .tcard.dila .pimg-ring{border-color:#f97316;}
+    .tcard.haziq .pimg-ring{border-color:#a855f7;}
+    .pimg-overlay{position:absolute;inset:0;border-radius:50%;background:#000000aa;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none;z-index:4;}
+    .pimg-wrap:hover .pimg-overlay{opacity:1;}
+    .pimg-overlay-txt{font-family:'Press Start 2P',monospace;font-size:5px;color:#fff;text-align:center;letter-spacing:.5px;line-height:1.8;}
 
-    /* FRONT */
-    .flip-card-front{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      padding:20px;
-    }
+    .tcard-top{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+    .tcard.haziq .tcard-top{gap:12px;}
+    .tcard-info{flex:1;}
+    .tname{font-family:'Press Start 2P',monospace;letter-spacing:1px;color:#fbbf24;margin-bottom:6px;}
+    .tcard.dila .tname{font-size:14px;}
+    .tcard.haziq .tname{font-size:10px;}
+    .trole{font-family:'Press Start 2P',monospace;letter-spacing:.8px;margin-bottom:8px;}
+    .tcard.dila .trole{font-size:7px;color:#fb923c;}
+    .tcard.haziq .trole{font-size:6px;color:#a78bfa;}
+    .tbadge{font-family:'Press Start 2P',monospace;font-size:5px;padding:3px 8px;display:inline-block;clip-path:polygon(3px 0,calc(100% - 3px) 0,100% 3px,100% calc(100% - 3px),calc(100% - 3px) 100%,3px 100%,0 calc(100% - 3px),0 3px);}
+    .tcard.dila .tbadge{background:#7c2d1266;color:#fdba74;border:1px solid #f9731666;}
+    .tcard.haziq .tbadge{background:#4c1d9566;color:#c4b5fd;border:1px solid #7c3aed66;}
+    .tdesc{font-family:'Press Start 2P',monospace;font-size:6px;color:#94a3b8;line-height:2.2;letter-spacing:.4px;border-top:1px solid #2d1060;padding-top:14px;}
+    .skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+    .skill-tag{font-family:'Press Start 2P',monospace;font-size:5px;padding:4px 8px;background:#1a0a3e;clip-path:polygon(3px 0,calc(100% - 3px) 0,100% 3px,100% calc(100% - 3px),calc(100% - 3px) 100%,3px 100%,0 calc(100% - 3px),0 3px);}
+    .tcard.dila .skill-tag{border:1px solid #f9731644;color:#fdba74;}
+    .tcard.haziq .skill-tag{border:1px solid #7c3aed44;color:#c4b5fd;}
 
-    .profile-img{
-      width:120px;
-      height:120px;
-      border-radius:50%;
-      border:3px solid #00f7ff;
-      margin-bottom:20px;
-      object-fit:cover;
-      box-shadow:0 0 20px #00f7ff;
-    }
+    /* CONTACT */
+    .contact-box{background:linear-gradient(135deg,#0d1f0dcc,#0a2a0acc);border:2px solid #22c55e;padding:28px 24px;max-width:560px;width:100%;clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);margin-bottom:36px;text-align:center;position:relative;overflow:hidden;}
+    .contact-box::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(34,197,94,.03) 18px,rgba(34,197,94,.03) 19px);pointer-events:none;}
+    .contact-title{font-family:'Press Start 2P',monospace;font-size:10px;color:#22c55e;letter-spacing:2px;margin-bottom:8px;}
+    .contact-sub{font-family:'Press Start 2P',monospace;font-size:6px;color:#86efac;letter-spacing:.8px;margin-bottom:22px;line-height:2;}
+    .wa-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:8px;background:#25D366;color:#fff;border:none;padding:14px 22px;cursor:pointer;letter-spacing:1px;clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px);transition:all .15s;text-decoration:none;margin-bottom:10px;}
+    .wa-btn:hover{background:#128C7E;transform:translateY(-3px);box-shadow:0 8px 30px #25D36655;}
+    .wa-btn-icon{font-size:18px;}
+    .wa-note{font-family:'Press Start 2P',monospace;font-size:5px;color:#64748b;letter-spacing:.5px;}
 
-    .name{
-      font-size:1.7rem;
-      color:#00f7ff;
-      margin-bottom:10px;
-      text-shadow:0 0 10px #00f7ff;
-    }
+    /* VISION */
+    .vision{background:linear-gradient(135deg,#1a0a3ecc,#2d0e60cc);border:2px solid #f97316;padding:26px 22px;max-width:680px;width:100%;clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);margin-bottom:36px;position:relative;overflow:hidden;}
+    .vision::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(249,115,22,.04) 20px,rgba(249,115,22,.04) 21px);pointer-events:none;}
+    .vision-title{font-family:'Press Start 2P',monospace;font-size:9px;color:#fb923c;letter-spacing:2px;margin-bottom:16px;}
+    .vision-text{font-family:'Press Start 2P',monospace;font-size:6px;color:#cbd5e1;line-height:2.5;letter-spacing:.4px;}
 
-    .role{
-      color:#ff00ff;
-      font-size:1rem;
-      text-shadow:0 0 10px #ff00ff;
-      margin-bottom:20px;
-    }
-
-    .contact-box{
-      width:100%;
-      margin-top:10px;
-      padding:15px;
-      border-radius:15px;
-      background:rgba(0,247,255,0.08);
-      border:1px solid rgba(0,247,255,0.4);
-      box-shadow:0 0 15px rgba(0,247,255,0.2);
-    }
-
-    .contact-title{
-      color:#00f7ff;
-      margin-bottom:10px;
-      font-size:1rem;
-      text-shadow:0 0 10px #00f7ff;
-    }
-
-    .contact-info{
-      font-size:0.9rem;
-      color:#ddd;
-      margin:6px 0;
-    }
-
-    /* BACK */
-    .flip-card-back{
-      transform:rotateY(180deg);
-      padding:30px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-    }
-
-    .intro-title{
-      font-size:1.8rem;
-      color:#ff00ff;
-      margin-bottom:20px;
-      text-shadow:0 0 10px #ff00ff;
-    }
-
-    .intro-text{
-      color:#ddd;
-      line-height:1.7;
-      font-size:0.95rem;
-    }
-
-    .social-btn{
-      margin-top:25px;
-      padding:10px 20px;
-      border:none;
-      border-radius:30px;
-      background:transparent;
-      border:2px solid #00f7ff;
-      color:#00f7ff;
-      cursor:pointer;
-      transition:0.3s;
-      box-shadow:0 0 10px #00f7ff;
-    }
-
-    .social-btn:hover{
-      background:#00f7ff;
-      color:black;
-      box-shadow:
-        0 0 20px #00f7ff,
-        0 0 40px #00f7ff;
-    }
-
-    @media(max-width:768px){
-      .card-wrapper{
-        flex-direction:column;
-        align-items:center;
-      }
-
-      .title{
-        font-size:2.3rem;
-      }
-    }
+    /* BACK BTN */
+    .back-btn{font-family:'Press Start 2P',monospace;font-size:8px;background:transparent;border:2px solid #f97316;color:#fb923c;padding:12px 20px;cursor:pointer;letter-spacing:1px;clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px);transition:all .15s;}
+    .back-btn:hover{background:#f97316;color:#fff;transform:translateY(-2px);}
   </style>
 </head>
-
 <body>
 
-  <div class="container">
+<!-- BG SCENE -->
+<div class="scene">
+  <div class="sky"></div>
+  <div class="aurora-band" style="width:58%;height:170px;background:radial-gradient(ellipse,#f9731622 0%,transparent 70%);top:0;left:-8%;animation-duration:7s;"></div>
+  <div class="aurora-band" style="width:52%;height:140px;background:radial-gradient(ellipse,#7c3aed33 0%,transparent 70%);top:24px;left:32%;animation-duration:9s;animation-delay:2s;"></div>
+  <div class="aurora-band" style="width:42%;height:110px;background:radial-gradient(ellipse,#f472b622 0%,transparent 70%);top:44px;right:-4%;animation-duration:6s;animation-delay:1s;"></div>
+  <div class="moon"></div>
+  <div class="stars-layer" id="starsLayer"></div>
+  <div class="mtn-layer">
+    <svg width="100%" height="290" viewBox="0 0 680 290" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,290 75,75 155,290" fill="#1c0c3c"/>
+      <polygon points="55,290 175,44 295,290" fill="#28104e"/>
+      <polygon points="195,290 315,85 435,290" fill="#1c0c3c"/>
+      <polygon points="375,290 475,65 575,290" fill="#28104e"/>
+      <polygon points="515,290 615,95 715,290" fill="#1c0c3c"/>
+      <polygon points="75,75 85,108 65,108" fill="#ddd0ee" opacity=".28"/>
+      <polygon points="175,44 188,80 162,80" fill="#ddd0ee" opacity=".28"/>
+      <polygon points="315,85 328,116 302,116" fill="#ddd0ee" opacity=".28"/>
+      <polygon points="475,65 488,98 462,98" fill="#ddd0ee" opacity=".28"/>
+      <ellipse cx="100" cy="290" rx="210" ry="105" fill="#0e2406"/>
+      <ellipse cx="340" cy="290" rx="230" ry="95" fill="#122c08"/>
+      <ellipse cx="580" cy="290" rx="210" ry="105" fill="#0e2406"/>
+    </svg>
+  </div>
+  <svg style="position:absolute;bottom:98px;left:0;width:130px;height:270px;z-index:2;" viewBox="0 0 130 270" xmlns="http://www.w3.org/2000/svg">
+    <rect x="54" y="100" width="18" height="170" fill="#3a1e0e"/>
+    <polygon points="63,16 16,122 110,122" fill="#185210"/>
+    <polygon points="63,46 20,132 106,132" fill="#1e6214"/>
+    <polygon points="63,76 26,148 100,148" fill="#185210"/>
+    <rect x="28" y="102" width="30" height="6" fill="#3a1e0e"/>
+    <rect x="18" y="108" width="5" height="62" fill="#3a1e0e"/>
+    <rect x="10" y="84" width="22" height="28" fill="#7a5408" stroke="#5a3800" stroke-width="2"/>
+    <rect x="14" y="88" width="14" height="20" fill="#ffcc44" opacity=".85"/>
+  </svg>
+  <svg style="position:absolute;bottom:98px;right:28px;width:158px;height:185px;z-index:2;" viewBox="0 0 158 185" xmlns="http://www.w3.org/2000/svg">
+    <rect x="98" y="18" width="18" height="42" fill="#524028"/>
+    <polygon points="8,68 79,8 150,68" fill="#481870"/>
+    <polygon points="8,68 79,14 150,68" fill="#581e80"/>
+    <rect x="8" y="66" width="142" height="106" fill="#604838"/>
+    <rect x="58" y="110" width="42" height="62" fill="#3a1e0e" rx="2"/>
+    <rect x="16" y="78" width="34" height="28" fill="#ffcc44" rx="2"/>
+    <rect x="108" y="78" width="34" height="28" fill="#ffcc44" rx="2"/>
+    <ellipse cx="33" cy="92" rx="20" ry="14" fill="#ffaa22" opacity=".22"/>
+    <ellipse cx="125" cy="92" rx="20" ry="14" fill="#ffaa22" opacity=".22"/>
+  </svg>
+  <div class="ground"><div class="grass"></div></div>
+  <svg style="position:absolute;bottom:102px;left:0;width:100%;height:28px;z-index:3;pointer-events:none;" viewBox="0 0 680 28" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="9" width="680" height="5" fill="#524018"/>
+    <rect x="38" y="0" width="8" height="28" fill="#524018"/><rect x="38" y="0" width="8" height="9" fill="#705830"/>
+    <rect x="138" y="0" width="8" height="28" fill="#524018"/><rect x="138" y="0" width="8" height="9" fill="#705830"/>
+    <rect x="298" y="0" width="8" height="28" fill="#524018"/><rect x="298" y="0" width="8" height="9" fill="#705830"/>
+    <rect x="448" y="0" width="8" height="28" fill="#524018"/><rect x="448" y="0" width="8" height="9" fill="#705830"/>
+    <rect x="638" y="0" width="8" height="28" fill="#524018"/><rect x="638" y="0" width="8" height="9" fill="#705830"/>
+  </svg>
+  <div id="firefliesLayer"></div>
+  <div id="particlesLayer" style="position:absolute;inset:0;pointer-events:none;z-index:1;"></div>
+</div>
 
-    <h1 class="title">Meet Our Team</h1>
+<!-- TICKER -->
+<div class="ticker"><span class="ticker-i">✦ ABOUT US — PIXEL WORLD ✦ &nbsp;&nbsp;&nbsp; DILA — THE BOSS & WEB DEVELOPER ✦ &nbsp;&nbsp;&nbsp; BUILT EVERY PIXEL FROM SCRATCH ✦ &nbsp;&nbsp;&nbsp; HAZIQ — ABOUT US CONTRIBUTOR ✦ &nbsp;&nbsp;&nbsp; EST. 2025 ✦</span></div>
 
-    <p class="subtitle">
-      Hover the neon cards to discover our introductions
-    </p>
+<!-- NAV -->
+<div class="nav">
+  <div class="ni2" onclick="navGo('index.html',this)"><span class="ni2-i">🏠</span><span class="ni2-l">HOME</span></div>
+  <div class="ni2 a"><span class="ni2-i">👤</span><span class="ni2-l">ABOUT</span></div>
+  <div class="ni2" onclick="navGo('projects.html',this)"><span class="ni2-i">📁</span><span class="ni2-l">PROJECTS</span></div>
+  <div class="ni2" onclick="navGo('blog.html',this)"><span class="ni2-i">📝</span><span class="ni2-l">BLOG</span></div>
+  <div class="ni2" onclick="navGo('contact.html',this)"><span class="ni2-i">✉️</span><span class="ni2-l">CONTACT</span></div>
+</div>
+<div class="nav-flash" id="nFlash"></div>
 
-    <div class="card-wrapper">
+<!-- PAGE -->
+<div class="page">
 
-      <!-- CARD 1 -->
-      <div class="flip-card">
-        <div class="flip-card-inner">
+  <div class="hero">
+    <div class="hero-badge">👑 THE BOSS BEHIND PIXEL WORLD</div>
+    <div class="hero-title">✦ ABOUT US ✦</div>
+    <div class="hero-sub">BUILT WITH CODE · POWERED BY PASSION</div>
+    <div class="hero-desc">One developer. One vision. Pixel World was designed, coded, and brought to life from scratch — every animation, every pixel, every line.</div>
+  </div>
 
-          <div class="flip-card-front">
+  <div class="stats-row">
+    <div class="stat"><span class="stat-val">👑</span><span class="stat-lbl">1 BOSS</span></div>
+    <div class="stat"><span class="stat-val">∞</span><span class="stat-lbl">LINES OF CODE</span></div>
+    <div class="stat"><span class="stat-val">100%</span><span class="stat-lbl">DILA BUILT</span></div>
+    <div class="stat"><span class="stat-val">🔥</span><span class="stat-lbl">NO DAYS OFF</span></div>
+  </div>
 
-           <img
-              src="haziq.jpg"
-              class="profile-img"
-              alt="Person 1"
-            >
+  <div class="pdiv"><div class="pdiv-line"></div><div class="pdiv-ico">👑</div><div class="pdiv-line"></div></div>
 
-            <h2 class="name">Mohd Haziq Afiq</h2>
-           
-            <!-- CONTACT US -->
-            <div class="contact-box">
-              <h3 class="contact-title">Contact Us</h3>
+  <div class="sec-title">— MEET THE TEAM —</div>
+  <div class="team-row">
 
-              <p class="contact-info">
-                📱 011-2190-6304
-              </p>
-            </div>
-
-          </div>
-
-          <div class="flip-card-back">
-
-            <h2 class="intro-title">Hello 👋</h2>
-
-            <p class="intro-text">
-              I’m Mohd Haziq Afiq, I’ve created this About Us page for my app project to introduce the development team and provide users with clear information about the people behind the application.
-            </p>
-
-          </div>
-
+    <!-- DILA — MAIN BIG CARD -->
+    <div class="tcard dila">
+      <div class="crown-badge">👑 THE BOSS</div>
+      <div class="tcard-top">
+        <div class="pimg-wrap" title="Click to upload photo">
+          <input type="file" accept="image/*" onchange="loadImg(event,'dila-img')"/>
+          <img id="dila-img" class="pimg"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Crect width='110' height='110' fill='%237c2d12'/%3E%3Ccircle cx='55' cy='42' r='26' fill='%23f97316'/%3E%3Cellipse cx='55' cy='96' rx='36' ry='24' fill='%23f97316'/%3E%3Ctext x='55' y='52' text-anchor='middle' font-size='22' fill='white'%3E👩%3C/text%3E%3C/svg%3E"
+            alt="Dila"/>
+          <div class="pimg-ring"></div>
+          <div class="pimg-overlay"><div class="pimg-overlay-txt">CLICK TO<br>UPLOAD<br>PHOTO</div></div>
+        </div>
+        <div class="tcard-info">
+          <div class="tname">DILA</div>
+          <div class="trole">WEB DEVELOPER<br>& DESIGNER</div>
+          <div class="tbadge">🔥 BUILT IT ALL</div>
         </div>
       </div>
+      <div class="tdesc">The brain, the hands, and the heart of Pixel World. Dila designed and coded everything you see — from the pixel backgrounds to the portal animations. Every detail is her work.</div>
+      <div class="skills">
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">UI/UX Design</span>
+        <span class="skill-tag">Pixel Art</span>
+        <span class="skill-tag">Animation</span>
+      </div>
+    </div>
 
-      <!-- CARD 2 -->
-      <div class="flip-card">
-        <div class="flip-card-inner">
-
-          <!-- FRONT -->
-          <div class="flip-card-front">
-
-            <img
-              src="adila.jpg"
-              class="profile-img"
-              alt="Person 2"
-            >
-
-            <h2 class="name">Nor Adilah</h2>
-
-            <!-- CONTACT US -->
-            <div class="contact-box">
-              <h3 class="contact-title">Contact Us</h3>
-
-              <p class="contact-info">
-                📱 019-434-6085
-              </p>
-            </div>
-
-          </div>
-
-          <!-- BACK -->
-          <div class="flip-card-back">
-
-            <h2 class="intro-title">
-              Nice to Meet You ✨
-            </h2>
-
-            <p class="intro-text">
-              I'm Nor Adilah. I am the web developer responsible for creating the main page of this application, focusing on building a clean, responsive, and user-friendly interface that ensures smooth navigation and an engaging first impression for users.
-            </p>
-
-          </div>
-
+    <!-- HAZIQ — SMALLER CARD -->
+    <div class="tcard haziq">
+      <div class="tcard-top">
+        <div class="pimg-wrap" title="Click to upload photo">
+          <input type="file" accept="image/*" onchange="loadImg(event,'haziq-img')"/>
+          <img id="haziq-img" class="pimg"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' fill='%234c1d95'/%3E%3Ccircle cx='40' cy='30' r='18' fill='%237c3aed'/%3E%3Cellipse cx='40' cy='70' rx='26' ry='16' fill='%237c3aed'/%3E%3Ctext x='40' y='38' text-anchor='middle' font-size='16' fill='white'%3E👦%3C/text%3E%3C/svg%3E"
+            alt="Haziq"/>
+          <div class="pimg-ring"></div>
+          <div class="pimg-overlay"><div class="pimg-overlay-txt">CLICK TO<br>UPLOAD</div></div>
+        </div>
+        <div class="tcard-info">
+          <div class="tname">HAZIQ</div>
+          <div class="trole">CONTRIBUTOR</div>
+          <div class="tbadge">📝 ABOUT US</div>
         </div>
       </div>
-
+      <div class="tdesc">Helped with the About Us page content and ideas. A good friend and teammate in the Pixel World journey.</div>
+      <div class="skills">
+        <span class="skill-tag">Copywriting</span>
+        <span class="skill-tag">Ideas</span>
+        <span class="skill-tag">Support</span>
+      </div>
     </div>
 
   </div>
 
+  <div class="pdiv"><div class="pdiv-line"></div><div class="pdiv-ico">📱</div><div class="pdiv-line"></div></div>
+
+  <div class="sec-title">— CONTACT US —</div>
+  <div class="contact-box">
+    <div class="contact-title">💬 GET IN TOUCH</div>
+    <div class="contact-sub">Got a project idea? Want to collab?<br>Or just wanna say hi? Hit us up!</div>
+    <!--
+      ★ TUKAR NOMBOR WHATSAPP:
+      Ganti 60xxxxxxxxx dengan nombor kau
+      Contoh: https://wa.me/60123456789
+    -->
+    <a class="wa-btn" href="https://wa.me/60194346085" target="_blank" rel="noopener">
+      <span class="wa-btn-icon">📱</span>
+      WHATSAPP US
+    </a>
+    <br>
+    <div class="wa-note">★ Replace 60xxxxxxxxx with your WhatsApp number ★</div>
+  </div>
+
+  <div class="pdiv"><div class="pdiv-line"></div><div class="pdiv-ico">🔮</div><div class="pdiv-line"></div></div>
+
+  <div class="vision">
+    <div class="vision-title">🔥 THE VISION</div>
+    <div class="vision-text">"I built Pixel World because I believe everyone deserves a digital space that feels alive — where code meets creativity, and every pixel tells a story. This is not just a website. This is my world."<br><br>— Dila, Lead Developer & Creator, 2025</div>
+  </div>
+
+  <button class="back-btn" onclick="navGo('index.html',this)">◀ BACK TO HOME</button>
+</div>
+
+<script>
+// STARS
+const sl=document.getElementById('starsLayer');
+for(let i=0;i<110;i++){
+  const s=document.createElement('div');s.className='star';
+  const sz=Math.random()<.12?3:Math.random()<.35?2:1;
+  s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*75}%;left:${Math.random()*100}%;opacity:${.15+Math.random()*.85};animation:twinkle ${1+Math.random()*5}s ease-in-out infinite;animation-delay:${Math.random()*7}s;`;
+  sl.appendChild(s);
+}
+// FIREFLIES
+const ff=document.getElementById('firefliesLayer');
+for(let i=0;i<16;i++){
+  const f=document.createElement('div');f.className='firefly';
+  f.style.cssText=`position:absolute;left:${10+Math.random()*80}%;bottom:${10+Math.random()*32}%;--fx:${(Math.random()-.5)*80}px;--fy:${(Math.random()-.5)*60}px;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*5}s;z-index:2;`;
+  ff.appendChild(f);
+}
+// PARTICLES
+const pl=document.getElementById('particlesLayer');
+const pcols=['#fb923c','#fbbf24','#f472b6','#a78bfa','#38bdf8','#34d399'];
+function spawnP(){
+  const p=document.createElement('div');p.className='particle';
+  const c=pcols[Math.floor(Math.random()*pcols.length)];
+  const sz=1.5+Math.random()*2.5;
+  p.style.cssText=`width:${sz}px;height:${sz}px;background:${c};box-shadow:0 0 6px ${c};left:${Math.random()*100}%;bottom:108px;--px:${(Math.random()-.5)*100}px;animation-duration:${6+Math.random()*6}s;`;
+  pl.appendChild(p);setTimeout(()=>p.remove(),13000);
+}
+for(let i=0;i<10;i++) setTimeout(spawnP,i*700);
+setInterval(spawnP,900);
+
+// UPLOAD IMAGE
+function loadImg(e,id){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{document.getElementById(id).src=ev.target.result;};
+  r.readAsDataURL(f);
+}
+window.loadImg=loadImg;
+
+// NAV
+function navGo(url,btn){
+  if(btn&&btn.classList){document.querySelectorAll('.ni2').forEach(b=>b.classList.remove('a'));btn.classList.add('a');}
+  const nf=document.getElementById('nFlash');
+  nf.style.background='#ffffff';nf.style.transition='opacity 0.15s';nf.classList.add('show');
+  setTimeout(()=>{window.location.href=url;},300);
+}
+window.navGo=navGo;
+</script>
 </body>
 </html>

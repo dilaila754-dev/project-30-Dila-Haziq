@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>IKM Lumut Smart Map</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/about.css">
+
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+</head>
+
+<body class="dark">
+
+<div id="authPage">
+  <!-- LOGIN -->
+  <div class="auth-box" id="loginBox">
+    <h1>Login</h1>
+    <input type="text" id="loginUser" placeholder="Username">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button id="loginBtn" class="btn-login">Login</button>
+
+    <div class="switch-link" id="showSignup">
+      Don't have an account? Sign Up
+    </div>
+
+    <div class="error" id="loginError"></div>
+  </div>
+
+  <!-- SIGNUP -->
+  <div class="auth-box" id="signupBox" style="display:none;">
+    <h1>Sign Up</h1>
+    <input type="text" id="signupUser" placeholder="Create Username">
+    <input type="password" id="signupPass" placeholder="Create Password">
+
+    <button id="signupBtn" class="btn-action">Sign Up</button>
+
+    <div class="switch-link" id="showLogin">
+      Already have an account? Login
+    </div>
+
+    <div class="error" id="signupError"></div>
+  </div>
+</div>
+
+<button class="menu-btn btn-secondary" id="menuBtn">☰</button>
+
+<header>
+  <h2>IKM Lumut Smart Map</h2>
+</header>
+
+<div class="sidebar" id="sidebar">
+
+  <h2>Navigation</h2>
+
+  <select id="start"></select>
+  <select id="end"></select>
+
+  <button id="routeBtn" class="btn-action">Show Route</button>
+  <button id="clearBtn" class="btn-warning">Clear Route</button>
+
+  <hr>
+
+  <h2>Save Location</h2>
+
+  <input type="text" id="saveName" placeholder="Enter location name">
+  <button id="saveBtn" class="btn-action">Save Current Center</button>
+
+  <div id="savedList"></div>
+
+  <hr>
+
+  <button id="modeBtn" class="btn-toggle">Toggle Light / Dark Mode</button>
+
+  <button id="aboutBtn" class="btn-secondary">About Us</button>
+
+  <button id="logoutBtn" class="btn-logout">Log Out</button>
+
+</div>
+
+<div id="aboutModal" class="about-modal">
+  <div class="about-box">
+    <h1>About Us</h1>
+    <p>
+      Welcome to <span class="highlight">IKM Lumut Smart Map</span>.
+      This system is designed to help users navigate campus locations
+      easily using an interactive map interface.
+    </p>
+
+    <p>
+      Built with <span class="highlight">Leaflet.js, JavaScript, and modern UI design</span>.
+    </p>
+
+    <button id="closeAbout">Close</button>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="js/core.js"></script>
+<script src="js/locations.js"></script>
+<script src="js/map.js"></script>
+<script src="js/app.js"></script>
+<script src="js/route.js"></script>
+
+<script src="js/jquery/auth-ui.js"></script>
+<script src="js/jquery/sidebar-ui.js"></script>
+<script src="js/jquery/storage-ui.js"></script>
+
+<script>
+  $("#aboutBtn").on("click", function () {
+    $("#aboutModal").fadeIn();
+  });
+
+  $("#closeAbout").on("click", function () {
+    $("#aboutModal").fadeOut();
+  });
+</script>
+
+</body>
+</html>

@@ -17,7 +17,7 @@ L.tileLayer(
 
 L.imageOverlay(
 
-"images/ikm_lumut_layout.png",
+"ikm_lumut_layout.jpeg",
 
 [
   [4.2150,101.6200],

@@ -7,7 +7,7 @@
   display:flex;
   justify-content:center;
   align-items:center;
-  background:url("../images/campus.png")
+  background:url("campus.jpeg")
   center/cover no-repeat;
   z-index:5000;
 }
